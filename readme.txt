@@ -1,5 +1,6 @@
 === SWG Auth ===
 Contributors: tekaoh
+Donate link: https://tekaohswg.github.io/donate.html
 Tags: admin, integration
 Requires at least: 2.8
 Tested up to: 5.4
@@ -27,8 +28,17 @@ If you're running a Star Wars Galaxies server, now you can use Wordpress to allo
 
 Check out https://swg-source.github.io/ and join that community on discord. If you'd rather build your own VM than download one, you could check out https://tekaohswg.github.io/new.html but be aware that this isn't for the faint of heart.
 
+== Screenshots ==
+
+1. Once this plugin is installed, your SWG Server will authenticate users with Wordpress.
+
 == Changelog ==
 
 = 0.1 =
 * Initial version
 * Authentication is functional
+
+== Upgrade Notice ==
+
+= 0.1 =
+* Initial version
