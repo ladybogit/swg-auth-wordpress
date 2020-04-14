@@ -1,7 +1,7 @@
 <?php
 /**
   * Plugin Name: SWG Auth
-  * Plugin URI: https://tekaohswg.github.io/swgauth-wordpress.html
+  * Plugin URI: https://tekaohswg.github.io/swg-auth-wordpress.html
   * Description: Star Wars Galaxies Authentication for Wordpress
   * Version: 0.1
   * Author: Tekaoh
@@ -14,11 +14,11 @@ if(!defined('ABSPATH')){
 }
 
 // Run when Wordpress is loaded
-add_action('wp_loaded', 'swgauth_run');
+add_action('wp_loaded', 'swg_auth_run');
 
-function swgauth_run(){
-  // Check if the swgauth action is requested
-  if($_GET['action'] == 'swgauth'){
+function swg_auth_run(){
+  // Check if the swg-auth action is requested
+  if($_GET['action'] == 'swg-auth'){
     // Check if a user_name and user_password are provided
     if($_POST['user_name'] && $_POST['user_password']){
       // Ask Wordpress to authenticate the user_name and user_password
@@ -36,7 +36,7 @@ function swgauth_run(){
       // Once we've responded, we don't want Wordpress to continue
       die;
     }
-    // If we're here, the swgauth action was requested but no user_name and user_password were provided. That's weird... Don't return anything
+    // If we're here, the swg-auth action was requested but no user_name and user_password were provided. That's weird... Don't return anything
     die;
   }
 }

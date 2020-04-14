@@ -1,9 +1,9 @@
 # SWG Authentication for Wordpress
 
 # Usage:
-1. Upload the plugin files to the `wp-content/plugins/swgauth/` directory or install the plugin through the WordPress admin panel.
+1. Upload the plugin files to the `wp-content/plugins/swg-auth/` directory or install the plugin through the WordPress admin panel.
 2. Activate the plugin through the Wordpress admin panel.
-3. Point your SWG server's externalAuthURL config flag to `http://url.to.wordpress/?action=swgauth`.
+3. Point your SWG server's externalAuthURL config flag to `http://url.to.wordpress/?action=swg-auth`.
 4. Done!
 
 # Notes:
