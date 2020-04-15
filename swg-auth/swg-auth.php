@@ -39,4 +39,25 @@ function swg_auth_run(){
     // If we're here, the swg-auth action was requested but no user_name and user_password were provided. That's weird... Don't return anything
     die;
   }
+  // Check if the swg-auth-admin-level action is requested
+  if($_GET['action'] == 'swg-auth-admin-level'){
+    // Check if a user_name is provided
+    if($_POST['user_name']){
+      // Look up the user
+      $userID = get_user_by('login', $_POST['user_name']);
+      // Check if the user is a Wordpress Admin
+      if(user_can($userID, 'administrator')){
+        // Send back level 50
+        $response['message'] = "50";
+        echo json_encode($response);
+        die;
+      }
+      // Not an admin
+      $response['message'] = "0";
+      echo json_encode($response);
+      die;
+    }
+  // If we're here, the swg-auth-admin-level action was requested by no user_name was provided. Don't return anything.
+  die;
+  }
 }
