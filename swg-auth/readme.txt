@@ -4,7 +4,7 @@ Donate link: https://tekaohswg.github.io/donate.html
 Tags: admin, integration
 Requires at least: 2.8
 Tested up to: 5.4
-Stable tag: 0.1
+Stable tag: 0.2
 Requires PHP: 4.3
 License: The Unlicense
 License URI: https://unlicense.org
