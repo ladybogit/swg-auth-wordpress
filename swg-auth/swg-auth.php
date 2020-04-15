@@ -19,3 +19,6 @@ function swg_auth_run(){
   include(plugin_dir_path(__FILE__) . 'includes/swg-auth-check.php');
   include(plugin_dir_path(__FILE__) . 'includes/swg-auth-admin-level-check.php');
 }
+
+// Run the admin panel stuff
+include(plugin_dir_path(__FILE__) . 'admin/admin.php');
