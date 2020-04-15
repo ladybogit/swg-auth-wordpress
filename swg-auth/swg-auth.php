@@ -18,9 +18,9 @@ add_action('wp_loaded', 'swg_auth_run');
 
 function swg_auth_run(){
   // Check if the swg-auth action is requested
-  if($_GET['action'] == 'swg-auth'){
+  if(isset($_GET['action']) && $_GET['action'] == 'swg-auth'){
     // Check if a user_name and user_password are provided
-    if($_POST['user_name'] && $_POST['user_password']){
+    if(isset($_POST['user_name']) && isset($_POST['user_password'])){
       // Ask Wordpress to authenticate the user_name and user_password
       $userInfo = wp_authenticate_username_password(NULL, $_POST['user_name'], $_POST['user_password']);
       // Check if the authentication request returned an error
@@ -40,9 +40,9 @@ function swg_auth_run(){
     die;
   }
   // Check if the swg-auth-admin-level action is requested
-  if($_GET['action'] == 'swg-auth-admin-level'){
+  if(isset($_GET['action']) && $_GET['action'] == 'swg-auth-admin-level'){
     // Check if a user_name is provided
-    if($_POST['user_name']){
+    if(isset($_POST['user_name'])){
       // Look up the user
       $userID = get_user_by('login', $_POST['user_name']);
       // Check if the user is a Wordpress Admin
