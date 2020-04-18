@@ -86,30 +86,7 @@ function swg_auth_approval_required_html($args){
 // Add user settings
 add_action('edit_user_profile', 'swg_auth_user_settings');
 function swg_auth_user_settings($user){
-  ?>
-  <h3>SWG Settings</h3>
-  <?php echo (get_user_meta($user->ID, 'swg-auth-approved', true) == 'on') ? '<input type="hidden" name="swg-auth-approved" value="on">' : ''; ?>
-  <table class="form-table">
-    <?php if(get_option('swg-auth-approval-required')) { ?>
-    <tr>
-      <th>
-        <label for="swg-auth-approved">Approved For Game Access</label>
-      </th>
-      <td>
-        <input type="checkbox" name=<?php echo (get_user_meta($user->ID, 'swg-auth-approved', true) == 'on') ? '"swg-auth-display-field" checked disabled' : '"swg-auth-approved"'; ?>>
-      </td>
-    </tr>
-    <?php } ?>
-    <tr>
-      <th>
-        <label for="swg-auth-banned">Banned From Game Access</label>
-      </th>
-      <td>
-        <input type="checkbox" name="swg-auth-banned" <?php echo (get_user_meta($user->ID, 'swg-auth-banned', true) == 'on') ? 'checked' : ''; ?>>
-      </td>
-    </tr>
-  </table>
-  <?php
+  include(plugin_dir_path(__FILE__) . 'swg-auth-user-settings-html.php');
 }
 add_action('edit_user_profile_update', 'swg_auth_approved_update');
 function swg_auth_approved_update($user_id){
