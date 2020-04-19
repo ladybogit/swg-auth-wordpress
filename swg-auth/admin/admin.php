@@ -102,3 +102,14 @@ function swg_auth_banned_update($user_id){
   }
   return update_user_meta($user_id, 'swg-auth-banned', $_POST['swg-auth-banned']);
 }
+add_action('edit_user_profile_update', 'swg_auth_admin_level_update');
+function swg_auth_admin_level_update($user_id){
+  if(!current_user_can('edit_user', $user_id)){
+    return false;
+  }
+  $value = intval($_POST['swg-auth-admin-level']);
+  if(!is_int($value) || $value < 0 || $value > 50){
+    return false;
+  }
+  return update_user_meta($user_id, 'swg-auth-admin-level', $value);
+}
