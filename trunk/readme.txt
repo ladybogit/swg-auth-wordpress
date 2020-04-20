@@ -16,19 +16,19 @@ If you're running a Star Wars Galaxies server, now you can use Wordpress to mana
 
 == Installation ==
 
-1. Upload the plugin files to the `wp-content/plugins/swg-auth/` directory or install the plugin through the WordPress admin panel.
-2. Activate the plugin through Wordpress admin panel.
-3. Point your SWG server's externalAuthURL config flag to `http://url.to.wordpress/?action=swg-auth`.
+1. Upload the plugin files to the `wp-content/plugins/swg-auth/` directory or install the plugin through the WordPress Admin Panel.
+2. Activate the plugin through the Wordpress Admin Panel.
+3. Get the SWG Server config you need from SWG Auth -> Server Config
 4. Done!
 
 == Changelog ==
 
 = 0.4 =
-* Optionally, you can require that new account have to be specifically approved for game access
+* Optionally, you can require that new accounts have to be specifically approved for game access
 * You can now ban an account from the game from the Wordpress Admin Panel
 
 = 0.3 =
-* Added an admin menu that provides you with the server cfg you need
+* Added an admin menu that provides you with the server config you need
 * Bug fixes
 
 = 0.2 =
