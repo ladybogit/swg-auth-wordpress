@@ -1,8 +1,12 @@
 <?php
 
 // Add the User Settings HTML
+add_action( 'show_user_profile', 'swg_auth_user_settings' );
 add_action( 'edit_user_profile', 'swg_auth_user_settings' );
 function swg_auth_user_settings( $user ) {
+  if ( ! current_user_can( 'administrator' ) ) {
+    return;
+  }
   include( plugin_dir_path( __FILE__ ) . 'html/swg-auth-user-settings-html.php' );
 }
 
