@@ -10,7 +10,7 @@ $admin_level = get_user_meta( $user->ID, 'swg-auth-admin-level', true );
 <table class="form-table">
 
   <?php if ( $approved === 'on' ): ?>
-  <input type="hidden" name="swg-auth-approved" value="on">' : ''; ?>
+  <input type="hidden" name="swg-auth-approved" value="on">
   <?php endif; ?>
 
   <?php if ( get_option( 'swg-auth-approval-required' ) ): ?>
