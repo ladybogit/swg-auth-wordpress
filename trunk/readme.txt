@@ -3,7 +3,7 @@ Contributors: tekaoh
 Tags: admin, integration
 Requires at least: 2.8
 Tested up to: 5.4
-Stable tag: 0.5
+Stable tag: 0.6
 Requires PHP: 4.3
 License: The Unlicense
 License URI: https://unlicense.org
@@ -23,6 +23,11 @@ If you're running a Star Wars Galaxies server, now you can use Wordpress to mana
 
 == Changelog ==
 
+= 0.6 =
+* Return a proper error message if you try to submit an invalid admin level
+* Fixed an issue where SWG User Settings didn't appear on your own profile
+* Bug Fixes
+
 = 0.5 =
 * Manually set the admin level of any user
 
@@ -41,6 +46,9 @@ If you're running a Star Wars Galaxies server, now you can use Wordpress to mana
 * Authentication is functional
 
 == Upgrade Notice ==
+
+= 0.6 =
+* Bug fixes
 
 = 0.5 =
 * New features
