@@ -18,6 +18,7 @@ add_action( 'wp_loaded', 'swg_auth_run' );
 function swg_auth_run() {
   include( plugin_dir_path( __FILE__ ) . 'includes/swg-auth-check.php' );
   include( plugin_dir_path( __FILE__ ) . 'includes/swg-auth-admin-level-check.php' );
+  include( plugin_dir_path( __FILE__ ) . 'includes/swg-auth-metrics-listener.php' );
 }
 
 // Run Admin Stuff

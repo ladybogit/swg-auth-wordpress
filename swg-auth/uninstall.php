@@ -7,6 +7,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 // Delete installation settings
 delete_option( 'swg-auth-approval-required' );
+delete_option( 'swg-auth-metrics-data' );
 
 // Delete user settings
 swg_auth_delete_user_meta();
