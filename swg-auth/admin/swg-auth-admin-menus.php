@@ -38,21 +38,15 @@ function swg_auth_admin_menus() {
 
 // Include the Admin Menu HTML files
 function swg_auth_settings_html() {
-
   if ( ! current_user_can( 'manage_options' ) ) {
     return;
   }
-
   include( plugin_dir_path( __FILE__ ) . 'html/swg-auth-settings-html.php' );
-
 }
 
 function swg_auth_server_config_html() {
-
   if ( ! current_user_can( 'manage_options' ) ) {
     return;
   }
-
   include( plugin_dir_path( __FILE__ ) . 'html/swg-auth-server-config-html.php' );
-
 }

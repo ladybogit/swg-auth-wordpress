@@ -39,6 +39,7 @@ function swg_auth_settings() {
 function swg_auth_general_settings_html( $args ) {
   echo '';
 }
+
 function swg_auth_approval_required_html( $args ) {
   ?>
   <input type="checkbox" name="swg-auth-approval-required" <?php echo ( get_option( 'swg-auth-approval-required' ) === 'on' ) ? 'checked' : '' ?>>
