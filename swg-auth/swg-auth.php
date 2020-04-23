@@ -25,3 +25,10 @@ function swg_auth_run() {
 include( plugin_dir_path( __FILE__ ) . 'admin/swg-auth-admin-menus.php' );
 include( plugin_dir_path( __FILE__ ) . 'admin/swg-auth-settings.php' );
 include( plugin_dir_path( __FILE__ ) . 'admin/swg-auth-user-settings.php' );
+
+// Run Public Stuff
+include( plugin_dir_path( __FILE__ ) . 'public/swg-auth-metrics-widget.php' );
+add_action( 'widgets_init', 'swg_auth_register_metrics_widget' );
+function swg_auth_register_metrics_widget() {
+  register_widget( 'swg_auth_metrics_widget' );
+}
