@@ -16,7 +16,7 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
 
 <p>No server has been detected. Please start up your server or check your SWG config.</p>
 
-<?php elseif ( time() > $data[ 'timestamp' ] + 2 ): ?>
+<?php elseif ( time() > $data[ 'timestamp' ] + $data [ 'webUpdateIntervalSeconds' ] + 2 ): ?>
 
 <table class="swg-auth-metrics-widget">
   <tr>
