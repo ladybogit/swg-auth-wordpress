@@ -7,6 +7,7 @@ if ( $title ) {
   echo $args['before_title'] . $title . $args['after_title'];
 }
 
+$hide_lights = isset( $instance[ 'hide_lights' ] ) ? $instance[ 'hide_lights' ] : false;
 $data = get_option( 'swg-auth-metrics-data' );
 $format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
 
@@ -25,7 +26,7 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
   </tr>
   <tr>
     <td>Status:</td>
-    <td>Offline <div class="swg-auth-red-light"></div></td>
+    <td>Offline<?php echo ( $hide_lights ) ? '' : ' <div class="swg-auth-red-light"></div>'; ?></td>
   </tr>
   <tr>
     <td>Offline Since:</td>
@@ -46,7 +47,7 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
     </tr>
     <tr>
       <td>Status:</td>
-      <td>Loading... <div class="led-yellow"></div></td>
+      <td>Loading...<?php echo ( $hide_lights ) ? '' : ' <div class="led-yellow"></div>'; ?></td>
     </tr>
     <tr>
       <td>Loading Since:</td>
@@ -67,7 +68,7 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
     </tr>
     <tr>
       <td>Status:</td>
-      <td>Online <div class="led-green"></div></td>
+      <td>Online<?php echo ( $hide_lights ) ? '' : ' <div class="led-green"></div>'; ?></td>
     </tr>
     <tr>
       <td>Online Since:</td>
