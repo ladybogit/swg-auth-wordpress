@@ -47,7 +47,7 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
     </tr>
     <tr>
       <td>Status:</td>
-      <td>Loading...<?php echo ( $hide_lights ) ? '' : ' <div class="led-yellow"></div>'; ?></td>
+      <td>Loading...<?php echo ( $hide_lights ) ? '' : ' <div class="swg-auth-yellow-light"></div>'; ?></td>
     </tr>
     <tr>
       <td>Loading Since:</td>
@@ -68,7 +68,7 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
     </tr>
     <tr>
       <td>Status:</td>
-      <td>Online<?php echo ( $hide_lights ) ? '' : ' <div class="led-green"></div>'; ?></td>
+      <td>Online<?php echo ( $hide_lights ) ? '' : ' <div class="swg-auth-green-light"></div>'; ?></td>
     </tr>
     <tr>
       <td>Online Since:</td>
