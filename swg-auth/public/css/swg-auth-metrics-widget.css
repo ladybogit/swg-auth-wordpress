@@ -1,0 +1,98 @@
+table.swg-auth-metrics-widget {
+  border: 0px;
+}
+table.swg-auth-metrics-widget td {
+  border: 0px;
+  padding: 4px;
+}
+
+.swg-auth-red-light {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  background-color: #FF0000;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
+  -webkit-animation: swg-auth-blink-red 0.5s infinite;
+  -moz-animation: swg-auth-blink-red 0.5s infinite;
+  -ms-animation: swg-auth-blink-red 0.5s infinite;
+  -o-animation: swg-auth-blink-red 0.5s infinite;
+  animation: swg-auth-blink-red 0.5s infinite;
+}
+@-webkit-keyframes swg-auth-blink-red {
+    from { background-color: #FF0000; }
+    50% { background-color: #AA0000; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 0;}
+    to { background-color: #FF0000; }
+}
+@-moz-keyframes swg-auth-blink-red {
+    from { background-color: #FF0000; }
+    50% { background-color: #AA0000; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 0;}
+    to { background-color: #FF0000; }
+}
+@-ms-keyframes swg-auth-blink-red {
+    from { background-color: #FF0000; }
+    50% { background-color: #AA0000; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 0;}
+    to { background-color: #FF0000; }
+}
+@-o-keyframes swg-auth-blink-red {
+    from { background-color: #FF0000; }
+    50% { background-color: #AA0000; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 0;}
+    to { background-color: #FF0000; }
+}
+@keyframes swg-auth-blink-red {
+    from { background-color: #FF0000; }
+    50% { background-color: #AA0000; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 0;}
+    to { background-color: #FF0000; }
+}
+.swg-auth-yellow-light {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  background-color: #FFFF00;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FFFF00 0 2px 12px;
+  -webkit-animation: swg-auth-blink-yellow 1s infinite;
+  -moz-animation: swg-auth-blink-yellow 1s infinite;
+  -ms-animation: swg-auth-blink-yellow 1s infinite;
+  -o-animation: swg-auth-blink-yellow 1s infinite;
+  animation: swg-auth-blink-yellow 1s infinite;
+}
+@-webkit-keyframes swg-auth-blink-yellow {
+    from { background-color: #FFFF00; }
+    50% { background-color: #AAAA00; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FFFF00 0 2px 0; }
+    to { background-color: #FFFF00; }
+}
+@-moz-keyframes swg-auth-blink-yellow {
+    from { background-color: #FFFF00; }
+    50% { background-color: #AAAA00; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FFFF00 0 2px 0; }
+    to { background-color: #FFFF00; }
+}
+@-ms-keyframes swg-auth-blink-yellow {
+    from { background-color: #FFFF00; }
+    50% { background-color: #AAAA00; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FFFF00 0 2px 0; }
+    to { background-color: #FFFF00; }
+}
+@-o-keyframes swg-auth-blink-yellow {
+    from { background-color: #FFFF00; }
+    50% { background-color: #AAAA00; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FFFF00 0 2px 0; }
+    to { background-color: #FFFF00; }
+}
+@keyframes swg-auth-blink-yellow {
+    from { background-color: #FFFF00; }
+    50% { background-color: #AAAA00; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FFFF00 0 2px 0; }
+    to { background-color: #FFFF00; }
+}
+.swg-auth-green-light {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+  width: 18px;
+  height: 18px;
+  background-color: #00FF00;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89FF00 0 2px 12px;
+}

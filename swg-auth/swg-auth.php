@@ -32,3 +32,7 @@ add_action( 'widgets_init', 'swg_auth_register_metrics_widget' );
 function swg_auth_register_metrics_widget() {
   register_widget( 'swg_auth_metrics_widget' );
 }
+add_action( 'wp_enqueue_scripts', 'swg_auth_enqueue_metrics_widget_css' );
+function swg_auth_enqueue_metrics_widget_css() {
+  wp_enqueue_style( 'swg-auth-metrics-widget', plugins_url( 'swg-auth/public/css/swg-auth-metrics-widget.css' ) );
+}
