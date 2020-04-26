@@ -6,6 +6,7 @@
 
   <form action="options.php" method="post">
     <?php settings_fields( 'swg-auth-general-settings' ); ?>
+    <?php settings_fields( 'swg-auth-odb-settings' ); ?>
     <?php do_settings_sections( 'swg-auth-settings' ); ?>
     <?php submit_button( 'Save Settings' ); ?>
   </form>

@@ -8,6 +8,11 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 // Delete installation settings
 delete_option( 'swg-auth-approval-required' );
 delete_option( 'swg-auth-metrics-data' );
+delete_option( 'swg-auth-odb-username' );
+delete_option( 'swg-auth-odb-password' );
+delete_option( 'swg-auth-odb-sid' );
+delete_option( 'swg-auth-odb-ip' );
+delete_option( 'swg-auth-odb-port' );
 
 // Delete user settings
 swg_auth_delete_user_meta();
