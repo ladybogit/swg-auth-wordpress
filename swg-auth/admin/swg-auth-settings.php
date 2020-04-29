@@ -174,29 +174,9 @@ function swg_auth_approval_required_html( $args ) {
 }
 
 function swg_auth_odb_settings_html( $args ) {
-  $oci8_loaded = extension_loaded( 'OCI8' );
-  $oracle_connected = false;
-  if ( $oci8_loaded ) {
-    $oracle_connected = oci_connect(
-      get_option( 'swg-auth-odb-username' ),
-      get_option( 'swg-auth-odb-password' ),
-      '(DESCRIPTION =
-        (ADDRESS_LIST =
-          (ADDRESS =
-            (PROTOCOL = TCP)
-            (HOST = ' . get_option( 'swg-auth-odb-ip' ) . ')
-            (PORT = ' . get_option( 'swg-auth-odb-port' ) . ')
-          )
-        )
-        (CONNECT_DATA =
-          (SID = ' . get_option( 'swg-auth-odb-sid' ) . ')
-        )
-      )'
-    );
-  }
   ?>
-  <p>The PHP OCI8 extension is <strong><?php echo $oci8_loaded ? 'loaded' : 'NOT loaded'; ?></strong>.</p>
-  <p>The connection to Oracle is <strong><?php echo $oracle_connected ? 'working' : 'NOT working'; ?></strong>.</p>
+  <p>The PHP OCI8 extension is <strong><?php echo extension_loaded( 'OCI8' ) ? 'loaded' : 'NOT loaded'; ?></strong>.</p>
+  <p>The connection to Oracle is <strong><?php echo swg_auth_oci_connect() ? 'working' : 'NOT working'; ?></strong>.</p>
   <?php
 }
 

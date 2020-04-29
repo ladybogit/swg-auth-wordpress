@@ -13,6 +13,9 @@ if ( ! defined( 'ABSPATH' ) ) {
   die;
 }
 
+// Include some includes
+include( plugin_dir_path( __FILE__ ) . 'includes/swg-auth-oci.php' );
+
 // Run when Wordpress is loaded
 add_action( 'wp_loaded', 'swg_auth_run' );
 function swg_auth_run() {
