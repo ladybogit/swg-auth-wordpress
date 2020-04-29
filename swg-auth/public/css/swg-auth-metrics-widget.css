@@ -1,6 +1,9 @@
 table.swg-auth-metrics-widget {
   border: 0px;
 }
+table.swg-auth-metrics-widget tr {
+  border: 0px;
+}
 table.swg-auth-metrics-widget td {
   border: 0px;
   padding: 4px;
