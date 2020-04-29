@@ -32,6 +32,10 @@ include( plugin_dir_path( __FILE__ ) . 'admin/swg-auth-user-settings.php' );
 // Run Public Stuff
 include( plugin_dir_path( __FILE__ ) . 'public/swg-auth-virtual-page.php' );
 include( plugin_dir_path( __FILE__ ) . 'public/swg-auth-resources.php' );
+add_action( 'wp_enqueue_scripts', 'swg_auth_enqueue_resource_table_css' );
+function swg_auth_enqueue_resource_table_css() {
+  wp_enqueue_style( 'swg-auth-resource-table', plugins_url( 'swg-auth/public/css/swg-auth-resource-table.css' ) );
+}
 include( plugin_dir_path( __FILE__ ) . 'public/swg-auth-metrics-widget.php' );
 add_action( 'widgets_init', 'swg_auth_register_metrics_widget' );
 function swg_auth_register_metrics_widget() {
