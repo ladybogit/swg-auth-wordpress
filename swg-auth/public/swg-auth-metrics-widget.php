@@ -13,6 +13,7 @@ class swg_auth_metrics_widget extends WP_Widget {
   }
 
   public function widget( $args, $instance ) {
+    wp_enqueue_style( 'swg-auth-metrics-widget', plugins_url( 'swg-auth/public/css/swg-auth-metrics-widget.css' ) );
     include( plugin_dir_path( __FILE__ ) . 'html/swg-auth-metrics-widget-html.php' );
   }
 
@@ -41,4 +42,9 @@ class swg_auth_metrics_widget extends WP_Widget {
     return $instance;
   }
 
+}
+
+add_action( 'widgets_init', 'swg_auth_register_metrics_widget' );
+function swg_auth_register_metrics_widget() {
+  register_widget( 'swg_auth_metrics_widget' );
 }
