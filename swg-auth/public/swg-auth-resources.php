@@ -8,6 +8,7 @@ function swg_auth_enqueue_resource_table_css() {
 }
 
 function swg_auth_resources_html() {
+  $resources = require( 'swg-auth-resource-metadata.php' );
   ob_start();
   include( plugin_dir_path( __FILE__ ) . 'html/swg-auth-resources-html.php' );
   return ob_get_clean();
