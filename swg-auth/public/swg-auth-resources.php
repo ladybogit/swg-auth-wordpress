@@ -7,6 +7,50 @@ function swg_auth_enqueue_resource_table_css() {
   }
 }
 
+function swg_auth_get_planets_list() {
+  $strings = array(
+    'corellia' => 'Corellia',
+    'dantooine' => 'Dantooine',
+    'dathomir' => 'Dathomir',
+    'endor' => 'Endor',
+    'lok' => 'Lok',
+    'naboo' => 'Naboo',
+    'rori' => 'Rori',
+    'talus' => 'Talus',
+    'tatooine' => 'Tatooine',
+    'yavin4' => 'Yavin 4',
+    'kashyyyk_dead_forest' => 'Kashyyyk Dead Forest',
+    'kashyyyk_hunting' => 'Kashyyyk Hunting Grounds',
+    'kashyyyk_main' => 'Kashyyyk',
+    'kashyyyk_north_dungeons' => 'Kashyyyk North Dungeons',
+    'kashyyyk_pob_dungeons' => 'Kashyyyk POB Dungeons',
+    'kashyyyk_rryatt_trail' => 'Kashyyyk Rryatt Trail',
+    'kashyyyk_south_dungeons' => 'Kashyyyk South Dungeons',
+    'mustafar' => 'Mustafar',
+  );
+  $connection = swg_auth_oci_connect();
+  $statement = oci_parse( $connection, "SELECT * FROM PLANET_OBJECTS WHERE PLANET_NAME NOT LIKE 'space%' AND PLANET_NAME NOT LIKE 'adventure%' AND PLANET_NAME NOT LIKE 'dungeon%' AND PLANET_NAME NOT LIKE 'tutorial%'");
+  $results = oci_execute( $statement );
+  $planets = array();
+  while ( $result = oci_fetch_array( $statement, OCI_ASSOC ) ) {
+    $planets[ $result[ 'OBJECT_ID' ] ] = $strings[ $result[ 'PLANET_NAME' ] ];
+  }
+  oci_free_statement( $statement );
+  oci_close( $connection );
+  return $planets;
+}
+
+function swg_auth_parse_fractal_seeds( $fractal_seeds ) {
+  $planets_list = swg_auth_get_planets_list();
+  $fractal_pairs = explode( ':', $fractal_seeds, -1);
+  $response = array();
+  foreach ( $fractal_pairs as $pair ) {
+    $buffer = explode( ' ', $pair );
+    $response[] = $planets_list[ $buffer[ 0 ] ];
+  }
+  return $response;
+}
+
 function swg_auth_parse_resource_attributes( $attributes ) {
   $attributes = explode( ':', $attributes, -1 );
   $strings = array(
