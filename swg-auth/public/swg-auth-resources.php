@@ -7,6 +7,31 @@ function swg_auth_enqueue_resource_table_css() {
   }
 }
 
+function swg_auth_parse_resource_attributes( $attributes ) {
+  $attributes = explode( ':', $attributes, -1 );
+  $strings = array(
+    'res_cold_resist' => 'Cold Resistance',
+    'res_conductivity' => 'Conductivity',
+    'res_decay_resist' => 'Decay Resistance',
+    'res_heat_resist' => 'Heat Resistance',
+    'res_malleability' => 'Malleability',
+    'res_shock_resistance' => 'Shock Resistance',
+    'res_toughness' => 'Unit Toughness',
+    'entangle_resistance' => 'Entangle Resistance',
+    'res_potential_energy' => 'Potential Energy',
+    'res_flavor' => 'Potential Flavor',
+    'res_quality' => 'Overall Quality',
+  );
+  $i = 0;
+  foreach ( $attributes as $attribute ) {
+    $buffer = explode( ' ', $attribute );
+    $attributes[ $strings[ $buffer[ 0 ] ] ] = $buffer[ 1 ];
+    unset( $attributes[ $i ] );
+    $i++;
+  }
+  return $attributes;
+}
+
 function swg_auth_resources_html() {
   $resources = require( 'swg-auth-resource-metadata.php' );
   ob_start();
