@@ -46,7 +46,10 @@ function swg_auth_parse_fractal_seeds( $fractal_seeds ) {
   $response = array();
   foreach ( $fractal_pairs as $pair ) {
     $buffer = explode( ' ', $pair );
-    $response[] = $planets_list[ $buffer[ 0 ] ];
+    $buffer = $planets_list[ $buffer[ 0 ] ];
+    if ( substr( $buffer, 0, 9 ) !== 'Kashyyyk ' ) {
+      $response[] = $buffer;
+    }
   }
   return $response;
 }
