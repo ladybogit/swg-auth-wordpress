@@ -37,7 +37,7 @@ if ( isset( $_GET[ 'display' ] ) && $_GET [ 'display' ] === 'single' && isset( $
 <?php while ( $result = oci_fetch_array( $statement, OCI_ASSOC + OCI_RETURN_NULLS ) ) : ?>
   <tr>
     <td><img src="<?php echo plugins_url(); ?>/swg-auth/public/img/resources/<?php echo $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'image' ] ?>"></td>
-    <td><?php echo $result[ 'RESOURCE_NAME' ]; ?></td>
+    <td><a href="<?php echo site_url(); ?>/?page_id=resources&display=single&resource-name=<?php echo $result[ 'RESOURCE_NAME' ]; ?>"><?php echo $result[ 'RESOURCE_NAME' ]; ?></a></td>
     <td><?php echo end( $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'classes' ] ); ?></td>
     <td>
       <?php
