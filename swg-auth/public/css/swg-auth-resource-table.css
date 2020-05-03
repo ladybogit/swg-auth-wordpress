@@ -1,3 +1,52 @@
+div.swg-auth-single-resource-page {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+div.swg-auth-single-resource-page div.swg-auth-resource-class-breadcrumbs {
+  width: 100%;
+  margin-bottom: 20px;
+}
+div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name {
+  width: 50%;
+}
+div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name img {
+  width: 64px;
+  height: 64px;
+  margin-right: 20px;
+}
+div.swg-auth-single-resource-page div.swg-auth-resource-deplete-time {
+  width: 50%;
+  margin: auto 0 auto 0;
+}
+div.swg-auth-single-resource-page div.swg-auth-resource-attributes {
+  width: 50%;
+  margin-top: 20px;
+}
+div.swg-auth-single-resource-page div.swg-auth-resource-planets {
+  width: 50%;
+  margin-top: 20px;
+}
+div.swg-auth-single-resource-page table.swg-auth-single-resource-attribute-table {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  width: auto;
+}
+div.swg-auth-single-resource-page table.swg-auth-single-resource-attribute-table tr {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+div.swg-auth-single-resource-page table.swg-auth-single-resource-attribute-table td {
+  padding: 0px 20px 0px 10px;
+  margin: 0;
+  border: 0;
+  vertical-align: bottom;
+}
+
 table.swg-auth-resource-table {
   border: 0px;
   margin: 0px;

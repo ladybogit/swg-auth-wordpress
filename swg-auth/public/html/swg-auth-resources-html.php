@@ -16,54 +16,51 @@ if ( isset( $_GET[ 'display' ] ) && $_GET [ 'display' ] === 'single' && isset( $
 ?>
 
 <div class="swg-auth-single-resource-page">
-  <div class="swg-auth-resource-icon">
-    <img src="<?php echo plugins_url(); ?>/swg-auth/public/img/resources/<?php echo $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'image' ] ?>">
-  </div>
-  <div class="swg-auth-resource-name">
-    <?php echo $result[ 'RESOURCE_NAME' ]; ?>
-  </div>
   <div class="swg-auth-resource-class-breadcrumbs">
     <?php
-      $last_class = end( $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'classes' ] );
       foreach ( $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'classes' ] as $class ) {
-        if ( $class === $last_class ){
-          echo $class;
-        } else {
-          echo $class . ' > ';
-        }
+        echo $class . ' > ';
       }
+      echo $result[ 'RESOURCE_NAME' ];
     ?>
   </div>
-  <div class="swg-auth-resource-attributes">
-    Attributes:<br />
-    <?php
-      foreach ( swg_auth_parse_resource_attributes( $result[ 'ATTRIBUTES' ] ) as $attribute => $value ) {
-        echo $attribute . ': ' . $value . '<br />';
-      }
-    ?>
-  </div>
-  <div class="swg-auth-resource-planets">
-    Available On:<br />
-    <?php
-      foreach ( swg_auth_parse_fractal_seeds( $result[ 'FRACTAL_SEEDS' ] ) as $planet ) {
-        echo $planet . '<br />';
-      }
-    ?>
+  <div class="swg-auth-resource-icon-and-name">
+    <img src="<?php echo plugins_url(); ?>/swg-auth/public/img/resources/<?php echo $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'image' ] ?>"><strong><?php echo $result[ 'RESOURCE_NAME' ]; ?></strong>
   </div>
   <div class="swg-auth-resource-deplete-time">
     <?php
       if ( $result[ 'DEPLETED_TIMESTAMP' ] > $clock[ 'LAST_SAVE_TIME' ] ) {
         $seconds_left = $result[ 'DEPLETED_TIMESTAMP' ] - $clock[ 'LAST_SAVE_TIME' ];
         $depletes_on = strtotime( $clock[ 'LAST_SAVE_TIMESTAMP' ] ) + $seconds_left;
-        echo 'Depletes On:<br />' . wp_date( $format, $depletes_on );
+        echo 'Depletes On: ' . wp_date( $format, $depletes_on );
       } elseif ( $result[ 'DEPLETED_TIMESTAMP' ] <= $clock[ 'LAST_SAVE_TIME' ] ) {
         $seconds_ago = $clock[ 'LAST_SAVE_TIME' ] - $result[ 'DEPLETED_TIMESTAMP' ];
         $depleted_on = strtotime( $clock[ 'LAST_SAVE_TIMESTAMP' ] ) - $seconds_ago;
-        echo 'Depleted On:<br />' . wp_date( $format, $depleted_on );
+        echo 'Depleted On: ' . wp_date( $format, $depleted_on );
       } else {
         echo 'Oops. Something went wrong with the depletion calculation...';
       }
     ?>
+  </div>
+  <div class="swg-auth-resource-attributes">
+    <p>Attributes:</p>
+    <table class="swg-auth-single-resource-attribute-table">
+    <?php
+      foreach ( swg_auth_parse_resource_attributes( $result[ 'ATTRIBUTES' ] ) as $attribute => $value ) {
+        echo '<tr><td>' . $attribute . ':</td><td>' . $value . '</td></tr>';
+      }
+    ?>
+    </table>
+  </div>
+  <div class="swg-auth-resource-planets">
+    <p>Available On:</p>
+    <table class="swg-auth-single-resource-attribute-table">
+    <?php
+      foreach ( swg_auth_parse_fractal_seeds( $result[ 'FRACTAL_SEEDS' ] ) as $planet ) {
+        echo '<tr><td>' . $planet . '</td></tr>';
+      }
+    ?>
+    </table>
   </div>
 </div>
 
