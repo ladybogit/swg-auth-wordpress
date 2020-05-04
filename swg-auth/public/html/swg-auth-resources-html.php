@@ -152,7 +152,113 @@ elseif ( isset( $_GET[ 'display' ] ) && $_GET[ 'display' ] === 'class' && isset(
 </table>
 
 <?php else : ?>
-Resources Home!
+
+<p>Select a resource class to get started:</p>
+<form method="GET" action="<?php echo site_url(); ?>">
+<input type="hidden" name="page_id" value="resources" /><input type="hidden" name="display" value="class" /><select name="resource-class">
+<option value="aluminum">Aluminum</option>
+<option value="gemstone_armophous">Amorphous Gemstone</option>
+<option value="bone_avian">Avian Bone</option>
+<option value="meat_avian">Avian Meat</option>
+<option value="vegetable_beans">Beans</option>
+<option value="fruit_berries">Berries</option>
+<option value="bone">Bone</option>
+<option value="hide_bristley">Bristley Hide</option>
+<option value="ore_carbonate">Carbonate Ore</option>
+<option value="meat_carnivore">Carnivore Meat</option>
+<option value="cereal">Cereal</option>
+<option value="chemical">Chemical</option>
+<option value="copper">Copper</option>
+<option value="corn">Corn</option>
+<option value="creature_food">Creature Food</option>
+<option value="creature_resources">Creature Resources</option>
+<option value="creature_structural">Creature Structural</option>
+<option value="seafood_crustacean">Crustacean</option>
+<option value="gemstone_crystalline">Crystalline Gemstone</option>
+<option value="corn_domesticated">Domesticated Corn</option>
+<option value="meat_domesticated">Domesticated Meat</option>
+<option value="milk_domesticated">Domesticated Milk</option>
+<option value="oats_domesticated">Domesticated Oats</option>
+<option value="rice_domesticated">Domesticated Rice</option>
+<option value="wheat_domesticated">Domesticated Wheat</option>
+<option value="meat_egg">Egg Meat</option>
+<option value="energy">Energy</option>
+<option value="softwood_evergreen">Evergreen Soft Wood</option>
+<option value="ore_extrusive">Extrusive Ore</option>
+<option value="metal_ferrous">Ferrous Metal</option>
+<option value="fiberplast">Fiberplast</option>
+<option value="seafood_fish">Fish</option>
+<option value="flora_food">Flora Food</option>
+<option value="flora_resources">Flora Resources</option>
+<option value="flora_structural">Flora Structural</option>
+<option value="fruit_flowers">Flowers</option>
+<option value="fruit">Fruit</option>
+<option value="fruit_fruits">Fruits</option>
+<option value="vegetable_fungi">Fungi</option>
+<option value="gas">Gas</option>
+<option value="gemstone">Gemstone</option>
+<option value="vegetable_greens">Greens</option>
+<option value="wood_deciduous">Hard Wood</option>
+<option value="meat_herbivore">Herbivore Meat</option>
+<option value="hide">Hide</option>
+<option value="bone_horn">Horn</option>
+<option value="ore_igneous">Igneous Ore</option>
+<option value="gas_inert">Inert Gas</option>
+<option value="petrochem_inert">Inert Petrochemical</option>
+<option value="inorganic">Inorganic</option>
+<option value="meat_insect">Insect Meat</option>
+<option value="ore_intrusive">Intrusive Ore</option>
+<option value="iron">Iron</option>
+<option value="gas_inert_known">Known Inert Gas</option>
+<option value="fuel_petrochem_liquid_known">Known Liquid Petrochem Fuel</option>
+<option value="radioactive_known">Known Radioactive</option>
+<option value="gas_reactive_known">Known Reactive Gas</option>
+<option value="fuel_petrochem_solid_known">Known Solid Petrochem Fuel</option>
+<option value="hide_leathery">Leathery Hide</option>
+<option value="fuel_petrochem_liquid">Liquid Petrochem Fuel</option>
+<option value="ore">Low-Grade Ore</option>
+<option value="meat">Meat</option>
+<option value="metal">Metal</option>
+<option value="milk">Milk</option>
+<option value="mineral">Mineral</option>
+<option value="seafood_mollusk">Mollusk</option>
+<option value="energy_renewable_unlimited">Non Site-Restricted Renewable Energy</option>
+<option value="metal_nonferrous">Non-Ferrous Metal</option>
+<option value="oats">Oats</option>
+<option value="organic">Organic</option>
+<option value="radioactive">Radioactive</option>
+<option value="gas_reactive">Reactive Gas</option>
+<option value="energy_renewable">Renewable energy</option>
+<option value="meat_reptillian">Reptillian Meat</option>
+<option value="rice">Rice</option>
+<option value="hide_scaley">Scaley Hide</option>
+<option value="seafood">Seafood</option>
+<option value="ore_sedimentary">Sedimentary Ore</option>
+<option value="seeds">Seeds</option>
+<option value="ore_siliclastic">Siliclastic Ore</option>
+<option value="energy_renewable_site_limited">Site-Restricted Renewable Energy</option>
+<option value="softwood">Soft Wood</option>
+<option value="energy_renewable_unlimited_solar">Solar Energy</option>
+<option value="fuel_petrochem_solid">Solid Petrochem Fuel</option>
+<option value="steel">Steel</option>
+<option value="vegetable_tubers">Tubers</option>
+<option value="vegetable">Vegetables</option>
+<option value="water">Water</option>
+<option value="wheat">Wheat</option>
+<option value="corn_wild">Wild Corn</option>
+<option value="meat_wild">Wild Meat</option>
+<option value="milk_wild">Wild Milk</option>
+<option value="oats_wild">Wild Oats</option>
+<option value="rice_wild">Wild Rice</option>
+<option value="wheat_wild">Wild Wheat</option>
+<option value="energy_renewable_unlimited_wind">Wind Energy</option>
+<option value="wood">Wood</option>
+<option value="hide_wooly">Wooly Hide</option>
+</select>
+
+<input type="submit"></input>
+</form>
+
 <?php endif; ?>
 
 <?php
