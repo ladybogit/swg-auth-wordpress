@@ -1,14 +1,18 @@
 <?php
 
+// Connect to Oracle
 $connection = swg_auth_oci_connect();
 
+// Get SWG Server's clock
 $statement = oci_parse( $connection, "SELECT * FROM CLOCK" );
 $results = oci_execute( $statement );
 $clock = oci_fetch_array( $statement );
 oci_free_statement( $statement );
 
+// Get the WordPress date format
 $format = get_option( 'date_format' );
 
+// If the user wants to view a single resource, ask Oracle for just that resource
 if ( isset( $_GET[ 'display' ] ) && $_GET [ 'display' ] === 'single' && isset( $_GET[ 'resource-name' ] ) ) :
   $statement = oci_parse( $connection, "SELECT * FROM RESOURCE_TYPES WHERE RESOURCE_NAME = '" . $_GET[ 'resource-name' ] . "'");
   $results = oci_execute( $statement );
@@ -65,16 +69,22 @@ if ( isset( $_GET[ 'display' ] ) && $_GET [ 'display' ] === 'single' && isset( $
 </div>
 
 <?php
+// If the user wants to view a resource class...
 elseif ( isset( $_GET[ 'display' ] ) && $_GET[ 'display' ] === 'class' && isset( $_GET[ 'resource-class' ] ) ) :
+  // Get the readable name of the class
   $class_string = end( $resources[ $_GET[ 'resource-class' ] ][ 'classes' ] );
+  // Find out which tier this class is in
   $class_position = array_keys( $resources[ $_GET[ 'resource-class' ] ][ 'classes' ], $class_string, true )[ 0 ];
+  // Search the resource metadata for final tier subclasses that are included in this class and add them to a SQL clause
   $search_string = '';
   foreach ($resources as $resource => $metadata) {
     if ( isset( $metadata[ 'classes' ][ $class_position ] ) && $metadata[ 'classes' ][ $class_position ] === $class_string ) {
       $search_string .= "RESOURCE_CLASS = '" . $resource . "' OR ";
     }
   }
+  // Trim off the last " OR " from a couple of lines ago
   $search_string = substr( $search_string, 0, -4 );
+  // Ask Oracle for all the resources included in the class for which we're searching
   $statement = oci_parse( $connection, "SELECT * FROM RESOURCE_TYPES WHERE RESOURCE_NAME NOT LIKE '@%' AND RESOURCE_CLASS NOT LIKE 'space%' AND (" . $search_string . ")" );
   $results = oci_execute( $statement );
 ?>
@@ -118,6 +128,5 @@ Resources Home!
 <?php endif; ?>
 
 <?php
-
-//oci_free_statement( $statement );
+// Thanks Oracle! ttyl
 oci_close( $connection );
