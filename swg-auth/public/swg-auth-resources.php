@@ -54,21 +54,37 @@ function swg_auth_parse_fractal_seeds( $fractal_seeds ) {
   return $response;
 }
 
-function swg_auth_parse_resource_attributes( $attributes ) {
+function swg_auth_parse_resource_attributes( $attributes, $shorthand = false ) {
   $attributes = explode( ':', $attributes, -1 );
-  $strings = array(
-    'res_cold_resist' => 'Cold Resistance',
-    'res_conductivity' => 'Conductivity',
-    'res_decay_resist' => 'Decay Resistance',
-    'res_heat_resist' => 'Heat Resistance',
-    'res_malleability' => 'Malleability',
-    'res_shock_resistance' => 'Shock Resistance',
-    'res_toughness' => 'Unit Toughness',
-    'entangle_resistance' => 'Entangle Resistance',
-    'res_potential_energy' => 'Potential Energy',
-    'res_flavor' => 'Potential Flavor',
-    'res_quality' => 'Overall Quality',
-  );
+  if ( $shorthand === true ) {
+    $strings = array(
+      'res_cold_resist' => 'CR',
+      'res_conductivity' => 'CD',
+      'res_decay_resist' => 'DR',
+      'res_heat_resist' => 'HR',
+      'res_malleability' => 'MA',
+      'res_shock_resistance' => 'SR',
+      'res_toughness' => 'UT',
+      'entangle_resistance' => 'ER',
+      'res_potential_energy' => 'PE',
+      'res_flavor' => 'PF',
+      'res_quality' => 'OQ',
+    );
+  } else {
+    $strings = array(
+      'res_cold_resist' => 'Cold Resistance',
+      'res_conductivity' => 'Conductivity',
+      'res_decay_resist' => 'Decay Resistance',
+      'res_heat_resist' => 'Heat Resistance',
+      'res_malleability' => 'Malleability',
+      'res_shock_resistance' => 'Shock Resistance',
+      'res_toughness' => 'Unit Toughness',
+      'entangle_resistance' => 'Entangle Resistance',
+      'res_potential_energy' => 'Potential Energy',
+      'res_flavor' => 'Potential Flavor',
+      'res_quality' => 'Overall Quality',
+    );
+  }
   $i = 0;
   foreach ( $attributes as $attribute ) {
     $buffer = explode( ' ', $attribute );

@@ -95,36 +95,57 @@ elseif ( isset( $_GET[ 'display' ] ) && $_GET[ 'display' ] === 'class' && isset(
   $statement = oci_parse( $connection, "SELECT * FROM RESOURCE_TYPES WHERE RESOURCE_NAME NOT LIKE '@%' AND RESOURCE_CLASS NOT LIKE 'space%' AND (" . $search_string . ")" );
   $results = oci_execute( $statement );
 ?>
-
-<table class="swg-auth-resource-table">
+<div class="swg-auth-resource-class-breadcrumbs">
+  <?php
+    $breadcrumb_string = '';
+    foreach ( $resources[ $_GET[ 'resource-class' ] ][ 'classes' ] as $class ) {
+      $slug = '';
+      foreach ( $resources as $resource => $metadata ) {
+        if ( end( $metadata[ 'classes' ] ) === $class ) {
+          $slug = $resource;
+          break;
+        }
+      }
+      $breadcrumb_string .= '<a href="' . site_url() . '/?page_id=resources&display=class&resource-class=' . $slug . '">' . $class . '</a> > ';
+    }
+    echo substr( $breadcrumb_string, 0, -3 );
+  ?>
+</div>
+<table class="swg-auth-resource-page">
 <?php while ( $result = oci_fetch_array( $statement, OCI_ASSOC + OCI_RETURN_NULLS ) ) : ?>
   <tr>
-    <td><img src="<?php echo plugins_url(); ?>/swg-auth/public/img/resources/<?php echo $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'image' ] ?>"></td>
-    <td><a href="<?php echo site_url(); ?>/?page_id=resources&display=single&resource-name=<?php echo $result[ 'RESOURCE_NAME' ]; ?>"><?php echo $result[ 'RESOURCE_NAME' ]; ?></a></td>
-    <td><a href="<?php echo site_url(); ?>/?page_id=resources&display=class&resource-class=<?php echo $result[ 'RESOURCE_CLASS' ]; ?>"><?php echo end( $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'classes' ] ); ?></a></td>
     <td>
-      <?php
-        foreach ( swg_auth_parse_resource_attributes( $result[ 'ATTRIBUTES' ] ) as $attribute => $value ) {
-          echo $attribute . ': ' . $value . '<br />';
-        }
-      ?>
+      <img src="<?php echo plugins_url(); ?>/swg-auth/public/img/resources/<?php echo $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'image' ] ?>">
     </td>
     <td>
-      Available on:<br>
-      <?php
-        foreach ( swg_auth_parse_fractal_seeds( $result[ 'FRACTAL_SEEDS' ] ) as $planet ) {
-          echo $planet . '<br />';
-        }
-      ?>
+      <a href="<?php echo site_url(); ?>/?page_id=resources&display=single&resource-name=<?php echo $result[ 'RESOURCE_NAME' ]; ?>"><?php echo $result[ 'RESOURCE_NAME' ]; ?></a>
+      <a href="<?php echo site_url(); ?>/?page_id=resources&display=class&resource-class=<?php echo $result[ 'RESOURCE_CLASS' ]; ?>"><?php echo end( $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'classes' ] ); ?></a>
     </td>
     <td>
-    <?php
-    if ( $result[ 'DEPLETED_TIMESTAMP' ] > $clock[ 'LAST_SAVE_TIME' ] ) {
-      $seconds_left = $result[ 'DEPLETED_TIMESTAMP' ] - $clock[ 'LAST_SAVE_TIME' ];
-      $depletes_on = strtotime( $clock[ 'LAST_SAVE_TIMESTAMP' ] ) + $seconds_left;
-      echo 'Depletes On: ' . wp_date( $format, $depletes_on );
-    }
-    ?>
+      <table class="swg-auth-resource-attribute-table">
+        <tr>
+        <?php
+          foreach ( swg_auth_parse_resource_attributes( $result[ 'ATTRIBUTES' ], true ) as $attribute => $value ) {
+            echo '<td>' . $attribute . '<br />' . $value . '</td>';
+          }
+        ?>
+        </tr>
+      </table>
+    </td>
+    <td>
+      <?php
+      if ( $result[ 'DEPLETED_TIMESTAMP' ] > $clock[ 'LAST_SAVE_TIME' ] ) {
+        $seconds_left = $result[ 'DEPLETED_TIMESTAMP' ] - $clock[ 'LAST_SAVE_TIME' ];
+        $depletes_on = strtotime( $clock[ 'LAST_SAVE_TIMESTAMP' ] ) + $seconds_left;
+        echo 'Depletes On<br />' . wp_date( $format, $depletes_on );
+      } elseif ( $result[ 'DEPLETED_TIMESTAMP' ] <= $clock[ 'LAST_SAVE_TIME' ] ) {
+        $seconds_ago = $clock[ 'LAST_SAVE_TIME' ] - $result[ 'DEPLETED_TIMESTAMP' ];
+        $depleted_on = strtotime( $clock[ 'LAST_SAVE_TIMESTAMP' ] ) - $seconds_ago;
+        echo 'Depleted On<br />' . wp_date( $format, $depleted_on );
+      } else {
+        echo 'Uh-Oh...';
+      }
+      ?>
     </td>
   </tr>
 <?php endwhile; ?>

@@ -23,7 +23,7 @@ div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name span.swg-a
 }
 div.swg-auth-single-resource-page div.swg-auth-resource-deplete-time {
   width: 50%;
-  margin: auto 0 auto 0;
+  margin: auto 0px auto 0px;
 }
 div.swg-auth-single-resource-page div.swg-auth-resource-attributes {
   width: 50%;
@@ -34,35 +34,53 @@ div.swg-auth-single-resource-page div.swg-auth-resource-planets {
   margin-top: 20px;
 }
 div.swg-auth-single-resource-page table.swg-auth-single-resource-attribute-table {
-  padding: 0;
-  margin: 0;
-  border: 0;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
   width: auto;
 }
 div.swg-auth-single-resource-page table.swg-auth-single-resource-attribute-table tr {
-  padding: 0;
-  margin: 0;
-  border: 0;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
 }
 div.swg-auth-single-resource-page table.swg-auth-single-resource-attribute-table td {
+  margin: 0px;
   padding: 0px 20px 0px 10px;
-  margin: 0;
-  border: 0;
+  border: 0px;
   vertical-align: bottom;
 }
 
-table.swg-auth-resource-table {
-  border: 0px;
+table.swg-auth-resource-page {
   margin: 0px;
   padding: 0px;
+  border: 0px;
+  width: 100%;
 }
-table.swg-auth-resource-table tr {
-  border: 0px;
+table.swg-auth-resource-page tr {
   margin: 0px;
   padding: 0px;
+  border-top: 1px solid darkgrey;
+  border-bottom: 1px solid darkgrey;
 }
-table.swg-auth-resource-table td {
-  border: 0px;
+table.swg-auth-resource-page td {
   margin: 0px;
   padding: 0px;
+  border: 0px;
+}
+table.swg-auth-resource-page table.swg-auth-resource-attribute-table {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  width: auto;
+}
+table.swg-auth-resource-page table.swg-auth-resource-attribute-table tr {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+table.swg-auth-resource-page table.swg-auth-resource-attribute-table td {
+  margin: 0px;
+  padding: 0px 8px 0px 0px;
+  border: 0px;
 }
