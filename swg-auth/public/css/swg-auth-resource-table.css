@@ -17,6 +17,10 @@ div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name img {
   height: 64px;
   margin-right: 20px;
 }
+div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name span.swg-auth-resource-name {
+  font-size: 1.5em;
+  font-weight: bold;
+}
 div.swg-auth-single-resource-page div.swg-auth-resource-deplete-time {
   width: 50%;
   margin: auto 0 auto 0;

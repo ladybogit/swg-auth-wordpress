@@ -23,13 +23,20 @@ if ( isset( $_GET[ 'display' ] ) && $_GET [ 'display' ] === 'single' && isset( $
   <div class="swg-auth-resource-class-breadcrumbs">
     <?php
       foreach ( $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'classes' ] as $class ) {
-        echo $class . ' > ';
+        $slug = '';
+        foreach ( $resources as $resource => $metadata ) {
+          if ( end( $metadata[ 'classes' ] ) === $class ) {
+            $slug = $resource;
+            break;
+          }
+        }
+        echo '<a href="' . site_url() . '/?page_id=resources&display=class&resource-class=' . $slug . '">' . $class . '</a> > ';
       }
-      echo $result[ 'RESOURCE_NAME' ];
+      echo '<a href="' . site_url() . '/?page_id=resources&display=single&resource-name=' . $result[ 'RESOURCE_NAME' ] . '">' . $result[ 'RESOURCE_NAME' ] . '</a>';
     ?>
   </div>
   <div class="swg-auth-resource-icon-and-name">
-    <img src="<?php echo plugins_url(); ?>/swg-auth/public/img/resources/<?php echo $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'image' ] ?>"><strong><?php echo $result[ 'RESOURCE_NAME' ]; ?></strong>
+    <img src="<?php echo plugins_url(); ?>/swg-auth/public/img/resources/<?php echo $resources[ $result[ 'RESOURCE_CLASS' ] ][ 'image' ] ?>"><span class="swg-auth-resource-name"><a href="<?php echo site_url() . '/?page_id=resources&display=single&resource-name=' . $result[ 'RESOURCE_NAME' ]; ?>"><?php echo $result[ 'RESOURCE_NAME' ]; ?></a></span>
   </div>
   <div class="swg-auth-resource-deplete-time">
     <?php
