@@ -77,16 +77,6 @@ elseif ( isset( $_GET[ 'display' ] ) && $_GET[ 'display' ] === 'class' && isset(
   $search_string = substr( $search_string, 0, -4 );
   $statement = oci_parse( $connection, "SELECT * FROM RESOURCE_TYPES WHERE RESOURCE_NAME NOT LIKE '@%' AND RESOURCE_CLASS NOT LIKE 'space%' AND (" . $search_string . ")" );
   $results = oci_execute( $statement );
-  while ( $result = oci_fetch_array( $statement, OCI_ASSOC + OCI_RETURN_NULLS ) ) :
-?>
-
-<?php echo $result['RESOURCE_NAME']; ?><br />
-
-<?php
-endwhile;
-else :
-  $statement = oci_parse( $connection, "SELECT * FROM RESOURCE_TYPES WHERE RESOURCE_NAME NOT LIKE '@%' AND RESOURCE_CLASS NOT LIKE 'space%'" );
-  $results = oci_execute( $statement );
 ?>
 
 <table class="swg-auth-resource-table">
@@ -123,9 +113,11 @@ else :
 <?php endwhile; ?>
 </table>
 
+<?php else : ?>
+Resources Home!
 <?php endif; ?>
 
 <?php
 
-oci_free_statement( $statement );
+//oci_free_statement( $statement );
 oci_close( $connection );
