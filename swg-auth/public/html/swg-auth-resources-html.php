@@ -262,5 +262,6 @@ elseif ( isset( $_GET[ 'display' ] ) && $_GET[ 'display' ] === 'class' && isset(
 <?php endif; ?>
 
 <?php
+
 // Thanks Oracle! ttyl
 oci_close( $connection );

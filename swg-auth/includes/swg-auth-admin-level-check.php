@@ -8,7 +8,7 @@ if ( isset( $_GET[ 'action' ] ) && $_GET[ 'action' ] === 'swg-auth-admin-level' 
   // Look up the user's Admin level
   $level = get_user_meta( $user->ID, 'swg-auth-admin-level', true );
 
-  // If the user is a Wordpress Admin, send back level 50
+  // If the user is a WordPress Admin, send back level 50
   if ( user_can( $user, 'administrator' ) ) {
     $response[ 'message' ] = "50";
 
@@ -23,6 +23,6 @@ if ( isset( $_GET[ 'action' ] ) && $_GET[ 'action' ] === 'swg-auth-admin-level' 
 
   // JSON Encode our response so that the server can understand it
   echo json_encode( $response );
-  // Once we've responded, we don't want Wordpress to continue
+  // Once we've responded, we don't want WordPress to continue
   die;
 }

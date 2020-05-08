@@ -8,17 +8,17 @@ Requires PHP: 4.3
 License: The Unlicense
 License URI: https://unlicense.org
 
-Star Wars Galaxies Authentication for Wordpress
+Star Wars Galaxies Authentication for WordPress
 
 == Description ==
 
-If you're running a Star Wars Galaxies server, now you can use Wordpress to manage your users.
+If you're running a Star Wars Galaxies server, now you can use WordPress to manage your users.
 
 == Installation ==
 
 1. Upload the plugin files to the `wp-content/plugins/swg-auth/` directory or install the plugin through the WordPress Admin Panel.
-2. Activate the plugin through the Wordpress Admin Panel.
-3. Get the SWG Server config you need from SWG Auth -> Server Config
+2. Activate the plugin through the WordPress Admin Panel.
+3. Get the SWG Server Config you need from SWG Auth -> Server Config
 4. Done!
 
 == Changelog ==
@@ -43,14 +43,14 @@ If you're running a Star Wars Galaxies server, now you can use Wordpress to mana
 
 = 0.4 =
 * Optionally, you can require that new accounts have to be specifically approved for game access
-* You can now ban an account from the game from the Wordpress Admin Panel
+* You can now ban an account from the game from the WordPress Admin Panel
 
 = 0.3 =
 * Added an admin menu that provides you with the server config you need
 * Bug fixes
 
 = 0.2 =
-* Wordpress can now take requests for admin level checks
+* WordPress can now take requests for admin level checks
 
 = 0.1 =
 * Authentication is functional

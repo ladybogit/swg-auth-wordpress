@@ -3,14 +3,14 @@
 // Check if the swg-auth action is requested and that a user_name and user_password are provided
 if ( isset( $_GET[ 'action' ] ) && $_GET[ 'action' ] === 'swg-auth' && isset( $_POST[ 'user_name' ] ) && isset( $_POST[ 'user_password' ] ) ) {
 
-  // Ask Wordpress to authenticate the user_name and user_password
+  // Ask WordPress to authenticate the user_name and user_password
   $user = wp_authenticate_username_password( null, $_POST[ 'user_name' ], $_POST[ 'user_password' ] );
 
   // Check if the authentication request returned an error
   if ( is_wp_error( $user ) ) {
     $response[ 'message' ] = "Account does not exist or password was incorrect";
 
-  // Wordpress Administrators are always let in
+  // WordPress Administrators are always let in
   } elseif ( user_can( $user, 'administrator' ) ) {
     $response[ 'message' ] = "success";
 
@@ -29,6 +29,6 @@ if ( isset( $_GET[ 'action' ] ) && $_GET[ 'action' ] === 'swg-auth' && isset( $_
 
   // JSON Encode our response so that the LoginServer knows what we're talking about
   echo json_encode( $response );
-  // Once we've responded, we don't want Wordpress to continue
+  // Once we've responded, we don't want WordPress to continue
   die;
 }
