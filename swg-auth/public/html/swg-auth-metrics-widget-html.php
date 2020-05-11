@@ -1,28 +1,48 @@
 <?php
 
-$title = ! empty( $instance[ 'title' ] ) ? $instance[ 'title' ] : 'Server Status';
+// No Direct Access
+if ( ! defined( 'ABSPATH' ) ) {
+  die;
+}
+
+// Get the widget title or use a default one
+$title = ! empty( $instance['title'] ) ? $instance['title'] : 'Server Status';
+// Filter the widget title for some reason
 $title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
-echo $args[ 'before_widget' ];
+
+// This comes before a widget
+echo $args['before_widget'];
+
+// If there is a title (which there certainly is), display it now please
 if ( $title ) {
   echo $args['before_title'] . $title . $args['after_title'];
 }
 
-$hide_lights = isset( $instance[ 'hide_lights' ] ) ? $instance[ 'hide_lights' ] : false;
+// Find out if we're supposed to hide the lights
+$hide_lights = isset( $instance['hide_lights'] ) ? $instance['hide_lights'] : false;
+
+// Get the latest metrics data from the database
 $data = get_option( 'swg-auth-metrics-data' );
+
+// Get the WordPress date and time format
 $format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
 
-if ( ! isset ( $data[ 'clusterName' ] ) ):
+// If no metrics data exists, just stop here and output an error message
+if ( ! isset ( $data['clusterName'] ) ):
 
 ?>
 
 <p>No server has been detected. Please start up your server or check your SWG config.</p>
 
-<?php elseif ( time() > $data[ 'timestamp' ] + $data [ 'webUpdateIntervalSeconds' ] + 2 ): ?>
+<?php
+  // The server is offline if the metrics data is too old
+  elseif ( time() > $data['timestamp'] + $data['webUpdateIntervalSeconds'] + 2 ):
+?>
 
 <table class="swg-auth-metrics-widget">
   <tr>
     <td>Server:</td>
-    <td><?php echo $data[ 'clusterName' ]; ?></td>
+    <td><?php echo $data['clusterName']; ?></td>
   </tr>
   <tr>
     <td>Status:</td>
@@ -30,7 +50,7 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
   </tr>
   <tr>
     <td>Offline Since:</td>
-    <td><?php echo wp_date( $format, $data[ 'timestamp' ] ); ?></td>
+    <td><?php echo wp_date( $format, $data['timestamp'] ); ?></td>
   </tr>
   <tr>
     <td>Population:</td>
@@ -38,12 +58,15 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
   </tr>
 </table>
 
-<?php elseif ( $data[ 'lastLoadingStateTime' ] === 0 ): ?>
+<?php
+  // The server is still loading if the last time it was loading is 0
+  elseif ( $data['lastLoadingStateTime'] === 0 ):
+?>
 
   <table class="swg-auth-metrics-widget">
     <tr>
       <td>Server:</td>
-      <td><?php echo $data[ 'clusterName' ]; ?></td>
+      <td><?php echo $data['clusterName']; ?></td>
     </tr>
     <tr>
       <td>Status:</td>
@@ -51,7 +74,7 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
     </tr>
     <tr>
       <td>Loading Since:</td>
-      <td><?php echo wp_date( $format, $data[ 'timeClusterWentIntoLoadingState' ] ); ?></td>
+      <td><?php echo wp_date( $format, $data['timeClusterWentIntoLoadingState'] ); ?></td>
     </tr>
     <tr>
       <td>Population:</td>
@@ -59,12 +82,15 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
     </tr>
   </table>
 
-<?php elseif ( $data[ 'timeClusterWentIntoLoadingState' ] === 0 ): ?>
+<?php
+  // The server is online if the time it began loading is 0
+  elseif ( $data['timeClusterWentIntoLoadingState'] === 0 ):
+?>
 
   <table class="swg-auth-metrics-widget">
     <tr>
       <td>Server:</td>
-      <td><?php echo $data[ 'clusterName' ]; ?></td>
+      <td><?php echo $data['clusterName']; ?></td>
     </tr>
     <tr>
       <td>Status:</td>
@@ -72,14 +98,16 @@ if ( ! isset ( $data[ 'clusterName' ] ) ):
     </tr>
     <tr>
       <td>Online Since:</td>
-      <td><?php echo wp_date( $format, $data[ 'lastLoadingStateTime' ] ); ?></td>
+      <td><?php echo wp_date( $format, $data['lastLoadingStateTime'] ); ?></td>
     </tr>
     <tr>
       <td>Population:</td>
-      <td><?php echo $data[ 'totalPlayerCount' ]; ?></td>
+      <td><?php echo $data['totalPlayerCount']; ?></td>
     </tr>
   </table>
 
 <?php
 endif;
-echo $args[ 'after_widget' ];
+
+// This comes after a widget
+echo $args['after_widget'];

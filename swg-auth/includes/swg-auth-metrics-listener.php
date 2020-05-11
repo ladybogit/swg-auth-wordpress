@@ -1,8 +1,23 @@
 <?php
 
-if ( isset( $_GET[ 'action' ] ) && $_GET[ 'action' ] === 'swg-auth-metrics' ) {
-  $data = json_decode( file_get_contents( 'php://input' ), true );
-  $data[ 'timestamp' ] = time();
-  update_option( 'swg-auth-metrics-data', $data );
+// No Direct Access
+if ( ! defined( 'ABSPATH' ) ) {
   die;
+}
+
+// Check if metrics are being sent
+if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth-metrics' ) {
+
+  // Decode the metrics data
+  $data = json_decode( file_get_contents( 'php://input' ), true );
+
+  // Add our own timestamp so that we know when this data was received
+  $data['timestamp'] = time();
+
+  // Put the data into the database for later
+  update_option( 'swg-auth-metrics-data', $data );
+
+  // We're all done. We don't want WordPress to continue
+  die;
+
 }

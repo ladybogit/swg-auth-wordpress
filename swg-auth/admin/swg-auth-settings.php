@@ -1,5 +1,10 @@
 <?php
 
+// No Direct Access
+if ( ! defined( 'ABSPATH' ) ) {
+  die;
+}
+
 add_action( 'admin_init', 'swg_auth_settings' );
 function swg_auth_settings() {
 

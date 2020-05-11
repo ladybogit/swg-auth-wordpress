@@ -1,4 +1,13 @@
-<?php settings_errors(); ?>
+<?php
+
+// No Direct Access
+if ( ! defined( 'ABSPATH' ) ) {
+  die;
+}
+
+settings_errors();
+
+?>
 
 <div class="wrap">
 

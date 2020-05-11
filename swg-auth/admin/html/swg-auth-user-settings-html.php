@@ -1,3 +1,12 @@
+<?php
+
+// No Direct Access
+if ( ! defined( 'ABSPATH' ) ) {
+  die;
+}
+
+?>
+
 <h3>SWG Settings</h3>
 
 <?php
