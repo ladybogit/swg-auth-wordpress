@@ -1,3 +1,12 @@
+<?php
+
+// No Direct Access
+if ( ! defined( 'ABSPATH' ) ) {
+  die;
+}
+
+?>
+
 <h3>SWG Settings</h3>
 
 <?php
@@ -53,7 +62,7 @@ $admin_level = get_user_meta( $user->ID, 'swg-auth-admin-level', true );
         <input type="hidden" name="swg-auth-admin-level" value="0">
         <input type="number" value="50" min="0" max="50" disabled>
       <?php else: ?>
-        <input type="number" name="swg-auth-admin-level" min="0" max="50" value="<?php echo ( $admin_level === null ) ? '0' : $admin_level; ?>">
+        <input type="number" name="swg-auth-admin-level" min="0" max="50" value="<?php echo ( $admin_level === null ) ? '0' : esc_attr( $admin_level ); ?>">
       <?php endif; ?>
       <span class="description">Must be between 0 and 50</span>
     </td>

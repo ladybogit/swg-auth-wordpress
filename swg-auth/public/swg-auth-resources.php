@@ -1,13 +1,13 @@
 <?php
 
-add_action( 'wp_enqueue_scripts', 'swg_auth_enqueue_resource_table_css' );
-function swg_auth_enqueue_resource_table_css() {
-  if ( is_page( 'resources' ) ) {
-    wp_enqueue_style( 'swg-auth-resource-table', plugins_url( 'swg-auth/public/css/swg-auth-resource-table.css' ) );
-  }
+// No Direct Access
+if ( ! defined( 'ABSPATH' ) ) {
+  die;
 }
 
+// This function will produce an array of planet names referenced by the planet's OID
 function swg_auth_get_planets_list() {
+  // We'll want to turn machine-friendly strings into human-friendly strings
   $strings = array(
     'corellia' => 'Corellia',
     'dantooine' => 'Dantooine',
@@ -28,34 +28,49 @@ function swg_auth_get_planets_list() {
     'kashyyyk_south_dungeons' => 'Kashyyyk South Dungeons',
     'mustafar' => 'Mustafar',
   );
+  // Ask Oracle for planet objects that are actually planets and not other things
   $connection = swg_auth_oci_connect();
   $statement = oci_parse( $connection, "SELECT * FROM PLANET_OBJECTS WHERE PLANET_NAME NOT LIKE 'space%' AND PLANET_NAME NOT LIKE 'adventure%' AND PLANET_NAME NOT LIKE 'dungeon%' AND PLANET_NAME NOT LIKE 'tutorial%'");
   $results = oci_execute( $statement );
+  // Build an array such that a key (planet OID) contains a value (human-friendly string)
   $planets = array();
   while ( $result = oci_fetch_array( $statement, OCI_ASSOC ) ) {
-    $planets[ $result[ 'OBJECT_ID' ] ] = $strings[ $result[ 'PLANET_NAME' ] ];
+    $planets[ $result['OBJECT_ID'] ] = $strings[ $result['PLANET_NAME'] ];
   }
+  // Thanks Oracle! ttyl
   oci_free_statement( $statement );
   oci_close( $connection );
+  // Return our array( OIDs => strings )
   return $planets;
 }
 
-function swg_auth_parse_fractal_seeds( $fractal_seeds ) {
+// This function will return a list of planets on which a resource can be found
+function swg_auth_get_resource_planets( $fractal_seeds ) {
+  // Get an array of planet names by OID
   $planets_list = swg_auth_get_planets_list();
+  // Separate the fractal seeds string from Oracle into planet/fractal pairs
   $fractal_pairs = explode( ':', $fractal_seeds, -1);
   $response = array();
   foreach ( $fractal_pairs as $pair ) {
+    // Separate the planet OID from the fractal seed
     $buffer = explode( ' ', $pair );
-    $buffer = $planets_list[ $buffer[ 0 ] ];
+    // Use the OID to get the planet's name
+    $buffer = $planets_list[ $buffer[0] ];
+    // Filter out Kashyyyk zones other than the main one
     if ( substr( $buffer, 0, 9 ) !== 'Kashyyyk ' ) {
+      // Add the planet name to the list
       $response[] = $buffer;
     }
   }
+  // Returns the list of planets as an array
   return $response;
 }
 
+// This function will parse a resource's attributes string and return it as an array
 function swg_auth_parse_resource_attributes( $attributes, $shorthand = false ) {
+  // Separate the attributes string into attribute/value pairs
   $attributes = explode( ':', $attributes, -1 );
+  // We will want human-readable attributes, either initials or names
   if ( $shorthand === true ) {
     $strings = array(
       'res_cold_resist' => 'CR',
@@ -85,27 +100,44 @@ function swg_auth_parse_resource_attributes( $attributes, $shorthand = false ) {
       'res_quality' => 'Overall Quality',
     );
   }
-  $i = 0;
+  $attributes_list = array();
   foreach ( $attributes as $attribute ) {
+    // Separate the attribute from its value
     $buffer = explode( ' ', $attribute );
-    $attributes[ $strings[ $buffer[ 0 ] ] ] = $buffer[ 1 ];
-    unset( $attributes[ $i ] );
-    $i++;
+    // Add the attribute to the list as name => value
+    $attributes_list[ $strings[ $buffer[0] ] ] = $buffer[1];
   }
-  return $attributes;
+  // Return an array such that attribute name keys contain the attribute values
+  return $attributes_list;
 }
 
+// If the user is on the resources page, enqueue the resources CSS
+add_action( 'wp_enqueue_scripts', 'swg_auth_enqueue_resources_css' );
+function swg_auth_enqueue_resources_css() {
+  if ( is_page( 'resources' ) ) {
+    wp_enqueue_style( 'swg-auth-resources', plugins_url( 'swg-auth/public/css/swg-auth-resources.css' ) );
+  }
+}
+
+// This will build the resource page's contents
 function swg_auth_resources_html() {
+  // We're going to need the resource metadata
   $resources = require( 'swg-auth-resource-metadata.php' );
+  // Using an output buffer makes the resources-html.php file a lot nicer to write
   ob_start();
+  // Include the actual page contents
   include( plugin_dir_path( __FILE__ ) . 'html/swg-auth-resources-html.php' );
+  // Return the output buffer
   return ob_get_clean();
 }
 
-new swg_auth_virtual_page(
-  array(
-    'slug' => 'resources',
-    'post_title' => 'Resources',
-    'post_content' => swg_auth_resources_html(),
-  )
-);
+// Create the resource page (but not if OCI8 isn't available)
+if ( extension_loaded( 'OCI8' ) ) {
+  new SWG_AUTH_VIRTUAL_PAGE(
+    array(
+      'slug' => 'resources',
+      'post_title' => 'Resources',
+      'post_content' => swg_auth_resources_html(),
+    )
+  );
+}

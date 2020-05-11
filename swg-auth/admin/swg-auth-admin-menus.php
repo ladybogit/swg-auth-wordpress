@@ -1,5 +1,10 @@
 <?php
 
+// No Direct Access
+if ( ! defined( 'ABSPATH' ) ) {
+  die;
+}
+
 // Build the Admin Menus
 add_action( 'admin_menu', 'swg_auth_admin_menus' );
 function swg_auth_admin_menus() {
