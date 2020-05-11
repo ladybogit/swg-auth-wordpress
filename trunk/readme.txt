@@ -3,7 +3,7 @@ Contributors: tekaoh
 Tags: admin, integration
 Requires at least: 2.8
 Tested up to: 5.4
-Stable tag: 0.9
+Stable tag: 0.10
 Requires PHP: 4.3
 License: The Unlicense
 License URI: https://unlicense.org
@@ -22,6 +22,10 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 4. Done!
 
 == Changelog ==
+
+= 0.10 =
+* Better quality code
+* Don't explode if you don't have OCI8 installed
 
 = 0.9 =
 * Resources browser lets you see what resources are available on your server
@@ -56,6 +60,9 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 * Authentication is functional
 
 == Upgrade Notice ==
+
+= 0.10 =
+* Big fixes
 
 = 0.9 =
 * New Resources Browser
