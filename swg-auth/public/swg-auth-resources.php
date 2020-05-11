@@ -131,11 +131,13 @@ function swg_auth_resources_html() {
   return ob_get_clean();
 }
 
-// Create the resource page
-new SWG_AUTH_VIRTUAL_PAGE(
-  array(
-    'slug' => 'resources',
-    'post_title' => 'Resources',
-    'post_content' => swg_auth_resources_html(),
-  )
-);
+// Create the resource page (but not if OCI8 isn't available)
+if ( extension_loaded( 'OCI8' ) ) {
+  new SWG_AUTH_VIRTUAL_PAGE(
+    array(
+      'slug' => 'resources',
+      'post_title' => 'Resources',
+      'post_content' => swg_auth_resources_html(),
+    )
+  );
+}
