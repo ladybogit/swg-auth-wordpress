@@ -187,30 +187,30 @@ function swg_auth_odb_settings_html( $args ) {
 
 function swg_auth_odb_username_html( $args ) {
   ?>
-  <input type="text" name="swg-auth-odb-username" value="<?php echo get_option( 'swg-auth-odb-username' ); ?>">
+  <input type="text" name="swg-auth-odb-username" value="<?php echo esc_attr( get_option( 'swg-auth-odb-username' ) ); ?>">
   <?php
 }
 
 function swg_auth_odb_password_html( $args ) {
   ?>
-  <input type="text" name="swg-auth-odb-password" value="<?php echo get_option( 'swg-auth-odb-password' ); ?>">
+  <input type="text" name="swg-auth-odb-password" value="<?php echo esc_attr( get_option( 'swg-auth-odb-password' ) ); ?>">
   <?php
 }
 
 function swg_auth_odb_sid_html( $args ) {
   ?>
-  <input type="text" name="swg-auth-odb-sid" value="<?php echo get_option( 'swg-auth-odb-sid' ); ?>">
+  <input type="text" name="swg-auth-odb-sid" value="<?php echo esc_attr( get_option( 'swg-auth-odb-sid' ) ); ?>">
   <?php
 }
 
 function swg_auth_odb_ip_html( $args ) {
   ?>
-  <input type="text" name="swg-auth-odb-ip" value="<?php echo get_option( 'swg-auth-odb-ip' ); ?>">
+  <input type="text" name="swg-auth-odb-ip" value="<?php echo esc_attr( get_option( 'swg-auth-odb-ip' ) ); ?>">
   <?php
 }
 
 function swg_auth_odb_port_html( $args ) {
   ?>
-  <input type="text" name="swg-auth-odb-port" value="<?php echo get_option( 'swg-auth-odb-port' ); ?>">
+  <input type="text" name="swg-auth-odb-port" value="<?php echo esc_attr( get_option( 'swg-auth-odb-port' ) ); ?>">
   <?php
 }
