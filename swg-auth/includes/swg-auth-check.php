@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' && isset( $_POST['user_name'] ) && isset( $_POST['user_password'] ) ) {
 
   // Check the secret key
-  if ( $_POST['secretKey'] !== get_option( 'swg-auth-loginserver-key') ) {
+  if ( $_POST['secretKey'] !== get_option( 'swg-auth-loginserver-key', '' ) ) {
     // If it's incorrect, stop immediately
     die;
   }
