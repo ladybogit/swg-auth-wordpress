@@ -13,6 +13,9 @@ delete_option( 'swg-auth-odb-password' );
 delete_option( 'swg-auth-odb-sid' );
 delete_option( 'swg-auth-odb-ip' );
 delete_option( 'swg-auth-odb-port' );
+delete_option( 'swg-auth-loginserver-key' );
+delete_option( 'swg-auth-serverutility-key' );
+delete_option( 'swg-auth-centralserver-key' );
 
 // Delete user settings
 swg_auth_delete_user_meta();
