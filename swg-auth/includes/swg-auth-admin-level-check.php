@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Check if the swg-auth-admin-level action is requested and that a user_name is provided
 if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth-admin-level' && isset( $_POST['user_name'] ) ) {
 
+  // Check the secret key
+  if ( $_POST['secretKey'] !== get_option( 'swg-auth-serverutility-key') ) {
+    // If it's incorrect, stop immediately
+    die;
+  }
+
   // Look up the user
   $user = get_user_by( 'login', $_POST['user_name'] );
   // Look up the user's Admin level

@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Check if the swg-auth action is requested and that a user_name and user_password are provided
 if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' && isset( $_POST['user_name'] ) && isset( $_POST['user_password'] ) ) {
 
+  // Check the secret key
+  if ( $_POST['secretKey'] !== get_option( 'swg-auth-loginserver-key') ) {
+    // If it's incorrect, stop immediately
+    die;
+  }
+
   // Ask WordPress to authenticate the user_name and user_password
   $user = wp_authenticate_username_password( null, $_POST['user_name'], $_POST['user_password'] );
 
