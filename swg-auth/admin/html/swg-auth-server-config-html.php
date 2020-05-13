@@ -5,6 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
   die;
 }
 
+// Check for the secret keys
+$loginserver_key = get_option( 'swg-auth-loginserver-key' );
+$serverutility_key = get_option( 'swg-auth-serverutility-key' );
+$centralserver_key = get_option( 'swg-auth-centralserver-key' );
+
 ?>
 
 <div class="wrap">
@@ -15,16 +20,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <p><strong>Note:</strong> Always make sure you've downloaded and compiled the latest SWG src.</p>
 
-<pre><code>[LoginServer]
-useExternalAuth=true
-externalAuthURL=<?php echo get_site_url(); ?>/?action=swg-auth
-
-[ServerUtility]
-externalAdminLevelsEnabled=true
-externalAdminLevelsURL=<?php echo get_site_url(); ?>/?action=swg-auth-admin-level
-
-[CentralServer]
-metricsDataURL=<?php echo get_site_url(); ?>?action=swg-auth-metrics
-webUpdateIntervalSeconds=5</code></pre>
+<p>
+  <code>
+    [LoginServer]<br>
+    useExternalAuth=true<br>
+    externalAuthURL=<?php echo get_site_url(); ?>/?action=swg-auth
+    <?php echo ( $loginserver_key !== '' ) ? '<br>externalAuthSecretKey=' . $loginserver_key : ''; ?>
+  </code>
+</p>
+<p>
+  <code>
+    [ServerUtility]<br>
+    externalAdminLevelsEnabled=true<br>
+    externalAdminLevelsURL=<?php echo get_site_url(); ?>/?action=swg-auth-admin-level
+    <?php echo ( $serverutility_key !== '' ) ? '<br>externalAdminLevelsSecretKey=' . $serverutility_key : ''; ?>
+  </code>
+</p>
+<p>
+  <code>
+    [CentralServer]<br>
+    metricsDataURL=<?php echo get_site_url(); ?>/?action=swg-auth-metrics<br>
+    webUpdateIntervalSeconds=5
+    <?php echo ( $centralserver_key !== '' ) ? '<br>metricsSecretKey=' . $centralserver_key : ''; ?>
+  </code>
+</p>
 
 </div>

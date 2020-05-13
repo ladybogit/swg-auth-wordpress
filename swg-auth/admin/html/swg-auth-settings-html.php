@@ -16,6 +16,7 @@ settings_errors();
   <form action="options.php" method="post">
     <?php settings_fields( 'swg-auth-general-settings' ); ?>
     <?php settings_fields( 'swg-auth-odb-settings' ); ?>
+    <?php settings_fields( 'swg-auth-secret-keys' ); ?>
     <?php do_settings_sections( 'swg-auth-settings' ); ?>
     <?php submit_button( 'Save Settings' ); ?>
   </form>
