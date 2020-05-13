@@ -115,7 +115,7 @@ function swg_auth_parse_resource_attributes( $attributes, $shorthand = false ) {
 add_action( 'wp_enqueue_scripts', 'swg_auth_enqueue_resources_css' );
 function swg_auth_enqueue_resources_css() {
   if ( is_page( 'resources' ) ) {
-    wp_enqueue_style( 'swg-auth-resources', plugins_url( 'swg-auth/public/css/swg-auth-resources.css' ) );
+    wp_enqueue_style( 'swg-auth-resources', plugin_dir_url( __FILE__ ) . 'css/swg-auth-resources.css' );
   }
 }
 
