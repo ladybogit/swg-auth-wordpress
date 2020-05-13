@@ -39,7 +39,7 @@ $centralserver_key = get_option( 'swg-auth-centralserver-key' );
 <p>
   <code>
     [CentralServer]<br>
-    metricsDataURL=<?php echo get_site_url(); ?>?action=swg-auth-metrics<br>
+    metricsDataURL=<?php echo get_site_url(); ?>/?action=swg-auth-metrics<br>
     webUpdateIntervalSeconds=5
     <?php echo ( $centralserver_key !== '' ) ? '<br>metricsSecretKey=' . $centralserver_key : ''; ?>
   </code>
