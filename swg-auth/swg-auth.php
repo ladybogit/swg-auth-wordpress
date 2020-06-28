@@ -3,7 +3,7 @@
   * Plugin Name: SWG Auth
   * Plugin URI: https://tekaohswg.github.io/swg-auth-wordpress.html
   * Description: Star Wars Galaxies Authentication for WordPress
-  * Version: 0.10
+  * Version: 0.11
   * Author: Tekaoh
   * Author URI: https://tekaohswg.github.io
 */
