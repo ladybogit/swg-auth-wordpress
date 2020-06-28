@@ -16,7 +16,7 @@ function swg_auth_settings() {
   );
 
   register_setting(
-    'swg-auth-general-settings',
+    'swg-auth-settings',
     'swg-auth-approval-required',
     array(
       'type' => 'boolean',
@@ -47,7 +47,7 @@ function swg_auth_settings() {
   );
 
   register_setting(
-    'swg-auth-odb-settings',
+    'swg-auth-settings',
     'swg-auth-odb-username',
     array(
       'type' => 'string',
@@ -71,7 +71,7 @@ function swg_auth_settings() {
   );
 
   register_setting(
-    'swg-auth-odb-settings',
+    'swg-auth-settings',
     'swg-auth-odb-password',
     array(
       'type' => 'string',
@@ -95,7 +95,7 @@ function swg_auth_settings() {
   );
 
   register_setting(
-    'swg-auth-odb-settings',
+    'swg-auth-settings',
     'swg-auth-odb-sid',
     array(
       'type' => 'string',
@@ -119,7 +119,7 @@ function swg_auth_settings() {
   );
 
   register_setting(
-    'swg-auth-odb-settings',
+    'swg-auth-settings',
     'swg-auth-odb-ip',
     array(
       'type' => 'string',
@@ -143,7 +143,7 @@ function swg_auth_settings() {
   );
 
   register_setting(
-    'swg-auth-odb-settings',
+    'swg-auth-settings',
     'swg-auth-odb-port',
     array(
       'type' => 'string',
@@ -174,7 +174,7 @@ function swg_auth_settings() {
   );
 
   register_setting(
-    'swg-auth-secret-keys',
+    'swg-auth-settings',
     'swg-auth-loginserver-key',
     array(
       'type' => 'string',
@@ -198,7 +198,7 @@ function swg_auth_settings() {
   );
 
   register_setting(
-    'swg-auth-secret-keys',
+    'swg-auth-settings',
     'swg-auth-serverutility-key',
     array(
       'type' => 'string',
@@ -222,7 +222,7 @@ function swg_auth_settings() {
   );
 
   register_setting(
-    'swg-auth-secret-keys',
+    'swg-auth-settings',
     'swg-auth-centralserver-key',
     array(
       'type' => 'string',
