@@ -5,17 +5,38 @@ if ( ! defined( 'ABSPATH' ) ) {
   die;
 }
 
-// Check if the swg-auth action is requested and that a user_name and user_password are provided
-if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' && isset( $_POST['user_name'] ) && isset( $_POST['user_password'] ) ) {
+// Check if the swg-auth action is requested
+if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' ) ) {
+
+  // What type of auth are we using?
+  $auth_type = get_option( 'swg-auth-auth-type', 'WebAPI' );
+
+  // Parse for the data we need
+  if ( $auth_type === 'WebAPI' ) {
+    $username = $_POST['user_name'];
+    $password = $_POST['user_password'];
+    $key = $_POST['secretKey'];
+  } elseif ( $auth_type === 'JsonWebAPI' ) {
+    $data = json_decode( file_get_contents( 'php://input' ), true );
+    $username = $data['user_name'];
+    $password = $data['user_password'];
+    $key = $data['secretKey'];
+  }
+
+  // Do we have everything we need continue?
+  if ( ! isset( $username ) || ! isset( $password ) ) {
+    // If not, abort the auth check and return to WordPress
+    return;
+  }
 
   // Check the secret key
-  if ( $_POST['secretKey'] !== get_option( 'swg-auth-loginserver-key', '' ) ) {
+  if ( $key !== get_option( 'swg-auth-loginserver-key', '' ) ) {
     // If it's incorrect, stop immediately
     die;
   }
 
-  // Ask WordPress to authenticate the user_name and user_password
-  $user = wp_authenticate_username_password( null, $_POST['user_name'], $_POST['user_password'] );
+  // Ask WordPress to authenticate the username and userpassword
+  $user = wp_authenticate_username_password( null, $username, $password );
 
   // Check if the authentication request returned an error
   if ( is_wp_error( $user ) ) {
