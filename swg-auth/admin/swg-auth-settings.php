@@ -39,6 +39,30 @@ function swg_auth_settings() {
     )
   );
 
+  register_setting(
+    'swg-auth-settings',
+    'swg-auth-auth-type',
+    array(
+      'type' => 'string',
+      'description' => 'What type of auth is to be used.',
+      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
+      'show_in_rest' => false,
+      'default' => 'WebAPI'
+    )
+  );
+
+  add_settings_field(
+    'swg-auth-auth-type',
+    'Auth Type',
+    'swg_auth_auth_type_html',
+    'swg-auth-settings',
+    'swg-auth-general-settings',
+    array(
+      //'label_for' => '', // When supplied, the setting title will be wrapped in a <label> element, its for attribute populated with this value.
+      //'class' => '', // CSS Class to be added to the <tr> element when the field is output.
+    )
+  );
+
   add_settings_section(
     'swg-auth-odb-settings',
     'Oracle Database Connection Settings',
@@ -257,6 +281,16 @@ function swg_auth_approval_required_html( $args ) {
   <input type="checkbox" name="swg-auth-approval-required" <?php echo ( get_option( 'swg-auth-approval-required' ) === 'on' ) ? 'checked' : ''; ?>>
   Require new accounts to be manually approved before they can login to the game.
   </label>
+  <?php
+}
+
+function swg_auth_auth_type_html( $args ) {
+  $current_value = get_option( 'swg-auth-auth-type' );
+  ?>
+  <select name="swg-auth-auth-type">
+    <option value="WebAPI" <?php echo ( $current_value === 'WebAPI' ) ? 'selected="selected"' : ''; ?>>WebAPI</option>
+    <option value="JsonWebAPI" <?php echo ( $current_value === 'JsonWebAPI' ) ? 'selected="selected"' : ''; ?>>JsonWebAPI</option>
+  </select>
   <?php
 }
 
