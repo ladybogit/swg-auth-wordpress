@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Check if the swg-auth action is requested
-if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' ) ) {
+if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' ) {
 
   // What type of auth are we using?
   $auth_type = get_option( 'swg-auth-auth-type', 'WebAPI' );
