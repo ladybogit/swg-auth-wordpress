@@ -24,7 +24,7 @@ $centralserver_key = get_option( 'swg-auth-centralserver-key' );
   <code>
     [LoginServer]<br>
     useExternalAuth=true<br>
-    <?php echo ( get_option( 'swg-auth-auth-type' ) === 'JsonWebAPI' ) ? "useJsonWebApi=true" : ''; ?>
+    <?php echo ( get_option( 'swg-auth-auth-type' ) === 'JsonWebAPI' ) ? "useJsonWebApi=true<br>" : ''; ?>
     externalAuthURL=<?php echo get_site_url(); ?>/?action=swg-auth
     <?php echo ( $loginserver_key !== '' ) ? '<br>externalAuthSecretKey=' . $loginserver_key : ''; ?>
   </code>
