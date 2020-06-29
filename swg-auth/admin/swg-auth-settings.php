@@ -29,7 +29,7 @@ function swg_auth_settings() {
 
   add_settings_field(
     'swg-auth-approval-required',
-    'Require approval before an account can have game access.',
+    'Account Approval Required',
     'swg_auth_approval_required_html',
     'swg-auth-settings',
     'swg-auth-general-settings',
@@ -60,7 +60,7 @@ function swg_auth_settings() {
 
   add_settings_field(
     'swg-auth-odb-username',
-    'Oracle Username:',
+    'Oracle Username',
     'swg_auth_odb_username_html',
     'swg-auth-settings',
     'swg-auth-odb-settings',
@@ -84,7 +84,7 @@ function swg_auth_settings() {
 
   add_settings_field(
     'swg-auth-odb-password',
-    'Oracle Password:',
+    'Oracle Password',
     'swg_auth_odb_password_html',
     'swg-auth-settings',
     'swg-auth-odb-settings',
@@ -108,7 +108,7 @@ function swg_auth_settings() {
 
   add_settings_field(
     'swg-auth-odb-sid',
-    'Oracle SID:',
+    'Oracle SID',
     'swg_auth_odb_sid_html',
     'swg-auth-settings',
     'swg-auth-odb-settings',
@@ -132,7 +132,7 @@ function swg_auth_settings() {
 
   add_settings_field(
     'swg-auth-odb-ip',
-    'Oracle IP Address:',
+    'Oracle IP Address',
     'swg_auth_odb_ip_html',
     'swg-auth-settings',
     'swg-auth-odb-settings',
@@ -156,7 +156,7 @@ function swg_auth_settings() {
 
   add_settings_field(
     'swg-auth-odb-port',
-    'Oracle Port:',
+    'Oracle Port',
     'swg_auth_odb_port_html',
     'swg-auth-settings',
     'swg-auth-odb-settings',
@@ -187,7 +187,7 @@ function swg_auth_settings() {
 
   add_settings_field(
     'swg-auth-loginserver-key',
-    'LoginServer Key:',
+    'LoginServer Key',
     'swg_auth_loginserver_key_html',
     'swg-auth-settings',
     'swg-auth-secret-keys',
@@ -211,7 +211,7 @@ function swg_auth_settings() {
 
   add_settings_field(
     'swg-auth-serverutility-key',
-    'ServerUtility Key:',
+    'ServerUtility Key',
     'swg_auth_serverutility_key_html',
     'swg-auth-settings',
     'swg-auth-secret-keys',
@@ -235,7 +235,7 @@ function swg_auth_settings() {
 
   add_settings_field(
     'swg-auth-centralserver-key',
-    'CentralServer Key:',
+    'CentralServer Key',
     'swg_auth_centralserver_key_html',
     'swg-auth-settings',
     'swg-auth-secret-keys',
@@ -253,7 +253,10 @@ function swg_auth_general_settings_html( $args ) {
 
 function swg_auth_approval_required_html( $args ) {
   ?>
+  <label for="swg-auth-approval-required">
   <input type="checkbox" name="swg-auth-approval-required" <?php echo ( get_option( 'swg-auth-approval-required' ) === 'on' ) ? 'checked' : ''; ?>>
+  Require new accounts to be manually approved before they can login to the game.
+  </label>
   <?php
 }
 
