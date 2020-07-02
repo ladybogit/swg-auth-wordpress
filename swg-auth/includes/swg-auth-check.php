@@ -60,6 +60,7 @@ if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' ) {
   }
 
   // JSON Encode our response so that the SWG server can understand it
+  header('Content-type: application/json');
   echo json_encode( $response );
 
   // Once we've responded, we don't want WordPress to continue
