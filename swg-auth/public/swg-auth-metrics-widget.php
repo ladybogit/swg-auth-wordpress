@@ -29,6 +29,7 @@ class SWG_AUTH_METRICS_WIDGET extends WP_Widget {
     // Get whatever settings have been set for this widget, or else use the defaults
     $title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
     $hide_lights = isset( $instance['hide_lights'] ) ? (bool) $instance['hide_lights'] : false;
+    $show_highest_population = isset( $instance['show_highest_population'] ) ? (bool) $instance['show_highest_population'] : false;
     // Display some input fields to change the settings
     ?>
 
@@ -42,6 +43,11 @@ class SWG_AUTH_METRICS_WIDGET extends WP_Widget {
       <label for="<?php echo $this->get_field_id( 'hide_lights' ); ?>">Hide LED Indicator Lights</label>
     </p>
 
+    <p>
+      <input class="checkbox" id="<?php echo $this->get_field_id( 'show_highest_population' ); ?>" name="<?php echo $this->get_field_name( 'show_highest_population' ); ?>" type="checkbox" <?php checked( $show_highest_population ); ?> />
+      <label for="<?php echo $this->get_field_id( 'show_highest_population' ); ?>">Show Highest Population</label>
+    </p>
+
     <?php
   }
 
@@ -52,6 +58,8 @@ class SWG_AUTH_METRICS_WIDGET extends WP_Widget {
     $instance['title'] = $new_instance['title'];
     // Set the new value for hiding lights
     $instance['hide_lights'] = isset( $new_instance['hide_lights'] ) ? (bool) $new_instance['hide_lights'] : false;
+    // Set the new value for showing the highest population
+    $instance['show_highest_population'] = isset( $new_instance['show_highest_population'] ) ? (bool) $new_instance['show_highest_population'] : false;
     // Done. Save settings
     return $instance;
   }

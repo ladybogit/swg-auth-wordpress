@@ -21,8 +21,27 @@ if ( $title ) {
 // Find out if we're supposed to hide the lights
 $hide_lights = isset( $instance['hide_lights'] ) ? $instance['hide_lights'] : false;
 
+// Find out if we're supposed to show the highest population
+$show_highest_population = isset( $instance['show_highest_population'] ) ? $instance['show_highest_population'] : false;
+
 // Get the latest metrics data from the database
 $data = get_option( 'swg-auth-metrics-data' );
+
+// If we want to show the highest population, the code for that can exist in a function
+if ( $show_highest_population ) {
+  function swg_auth_show_highest_population( $data, $format ) {
+    ?>
+    <tr>
+      <td>Highest Population:</td>
+      <td><?php echo array_key_exists( 'highestPlayerCount', $data ) ? $data['highestPlayerCount'] : 'No Population Found'; ?></td>
+    </tr>
+    <tr>
+      <td>Record Set On:</td>
+      <td><?php echo array_key_exists( 'highestPlayerCountTimestamp', $data ) ? wp_date( $format, $data['highestPlayerCountTimestamp'] ) : 'No Timestamp Found'; ?></td>
+    </tr>
+    <?php
+  }
+}
 
 // Get the WordPress date and time format
 $format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
@@ -56,6 +75,7 @@ if ( ! isset ( $data['clusterName'] ) ):
     <td>Population:</td>
     <td>0</td>
   </tr>
+  <?php if ( $show_highest_population ) { swg_auth_show_highest_population( $data, $format ); } ?>
 </table>
 
 <?php
@@ -80,6 +100,7 @@ if ( ! isset ( $data['clusterName'] ) ):
       <td>Population:</td>
       <td>0</td>
     </tr>
+    <?php if ( $show_highest_population ) { swg_auth_show_highest_population( $data, $format ); } ?>
   </table>
 
 <?php
@@ -104,6 +125,7 @@ if ( ! isset ( $data['clusterName'] ) ):
       <td>Population:</td>
       <td><?php echo $data['totalPlayerCount']; ?></td>
     </tr>
+    <?php if ( $show_highest_population ) { swg_auth_show_highest_population( $data, $format ); } ?>
   </table>
 
 <?php
