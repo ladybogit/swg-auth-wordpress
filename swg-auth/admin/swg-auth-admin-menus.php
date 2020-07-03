@@ -15,7 +15,7 @@ function swg_auth_admin_menus() {
     'administrator',
     'swg-auth-settings',
     'swg_auth_settings_html',
-    '', // TODO: Icon URL
+    'dashicons-swg',
     3
   );
 
@@ -54,4 +54,11 @@ function swg_auth_server_config_html() {
     return;
   }
   include( plugin_dir_path( __FILE__ ) . 'html/swg-auth-server-config-html.php' );
+}
+
+// Include the Admin CSS
+add_action( 'admin_enqueue_scripts', 'swg_auth_admin_enqueue_scripts' );
+function swg_auth_admin_enqueue_scripts() {
+  wp_register_style( 'swg_auth_dashicons', plugins_url( '/swg-auth/admin/css/swg-auth-dashicons.css' ) );
+  wp_enqueue_style( 'swg_auth_dashicons' );
 }

@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'swg auth dashicons';
+  src: url('../fonts/swg-auth-dashicons.eot');
+  src: url('../fonts/swg-auth-dashicons.eot?#iefix') format('embedded-opentype'),
+    url('../fonts/swg-auth-dashicons.woff') format('woff'),
+    url('../fonts/swg-auth-dashicons.ttf') format('truetype'),
+    url('../fonts/swg-auth-dashicons.svg#swg-auth-dashicons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class*='dashicons-swg']:before{
+  display: inline-block;
+  font-family: 'swg auth dashicons';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
+.dashicons-swg:before{content:'\0041';}
