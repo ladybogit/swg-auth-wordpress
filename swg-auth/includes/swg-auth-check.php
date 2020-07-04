@@ -15,11 +15,15 @@ if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' ) {
   if ( $auth_type === 'WebAPI' ) {
     $username = $_POST['user_name'];
     $password = $_POST['user_password'];
+    $station_id = $_POST['stationID'];
+    $ip = $_POST['ip'];
     $key = $_POST['secretKey'];
   } elseif ( $auth_type === 'JsonWebAPI' ) {
     $data = json_decode( file_get_contents( 'php://input' ), true );
     $username = $data['user_name'];
     $password = $data['user_password'];
+    $station_id = $data['stationID'];
+    $ip = $data['ip'];
     $key = $data['secretKey'];
   }
 
@@ -58,6 +62,9 @@ if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' ) {
   } else {
     $response['message'] = 'success';
   }
+
+  // Save the account's Station ID for later
+  update_user_meta( $user->ID, 'swg-auth-station-id', $station_id );
 
   // JSON Encode our response so that the SWG server can understand it
   header('Content-type: application/json');
