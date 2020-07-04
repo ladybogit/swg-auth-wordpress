@@ -3,7 +3,7 @@ Contributors: tekaoh
 Tags: admin, integration
 Requires at least: 2.8
 Tested up to: 5.4
-Stable tag: 0.11
+Stable tag: 0.12
 Requires PHP: 4.3
 License: The Unlicense
 License URI: https://unlicense.org
@@ -22,6 +22,12 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 4. Done!
 
 == Changelog ==
+
+= 0.12 =
+* Show a list of characters associated with an account
+* Support JsonWebAPI for authentication
+* Optionally display the highest population achieved on your server
+* Minor appearance tweaks
 
 = 0.11 =
 * Secret keys can now be used to secure communications from SWG Server
@@ -64,6 +70,9 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 * Authentication is functional
 
 == Upgrade Notice ==
+
+= 0.12 =
+* New features
 
 = 0.11 =
 * Secret Keys and Bug Fixes
