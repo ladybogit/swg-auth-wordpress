@@ -10,6 +10,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 <h3>SWG Settings</h3>
 
 <?php
+// We're going to need OCI8 to look up character names.
+if ( extension_loaded( 'OCI8' ) ) {
+  // Do we have a Station ID on file for this account?
+  $station_id = get_user_meta( $user->ID, 'swg-auth-station-id', true );
+  if ( $station_id ) {
+    // If so, ask Oracle for a list of characters on this account.
+    $connection = swg_auth_oci_connect();
+    $statement = oci_parse( $connection, "SELECT * FROM PLAYERS WHERE STATION_ID='" . $station_id . "'" );
+    $results = oci_execute( $statement );
+    // Create a list of characters.
+    $format = get_option( 'date_format' );
+    echo '<p>Characters associated with this account:</p>';
+    echo '<ul>';
+    while ( $result = oci_fetch_array( $statement, OCI_ASSOC + OCI_RETURN_NULLS ) ) {
+      echo '<li>' . $result['CHARACTER_FULL_NAME'] . ' (Last Login: ' . wp_date( $format, strtotime( $result['LAST_LOGIN_TIME'] ) ) . '; Created: ' . wp_date( $format, strtotime( $result['CREATE_TIME'] ) ) . ')' . '</li>';
+    }
+    echo '</ul>';
+  } else {
+    // No Station ID in user meta
+    echo '<p>Station ID unknown. Waiting for next account authentication...</p>';
+  }
+}
+?>
+
+<?php
 $is_admin = false;
 // Collect the user's existing meta values
 $approved = get_user_meta( $user->ID, 'swg-auth-approved', true );
