@@ -2,7 +2,7 @@
 Contributors: tekaoh
 Tags: admin, integration
 Requires at least: 2.8
-Tested up to: 5.4
+Tested up to: 5.5
 Stable tag: 0.12
 Requires PHP: 4.3
 License: The Unlicense
