@@ -282,8 +282,7 @@ developmentMode=<?php echo get_option( 'swg-auth-developmentMode', 'on' ) === 'o
 DSN=<?php echo get_option( 'swg-auth-DSN', '//127.0.0.1/swg' ) . PHP_EOL; ?>
 easyExternalAccess=<?php echo get_option( 'swg-auth-easyExternalAccess', '' ) === 'on' ? 'true' : 'false'; echo PHP_EOL; ?>
 <?php echo ( get_option( 'swg-auth-loginserver-key' ) !== '' ) ? 'externalAuthSecretKey=' . get_option( 'swg-auth-loginserver-key' ) . PHP_EOL : ''; ?>
-externalAuthURL=<?php echo get_site_url(); ?>/?action=swg-auth
-useExternalAuth=<?php echo get_option( 'swg-auth-useExternalAuth', 'on' ) === 'on' ? 'true' : 'false'; echo PHP_EOL; ?>
+<?php echo ( get_option( 'swg-auth-useExternalAuth', 'on' ) === 'on' ) ? 'externalAuthURL=' . get_site_url() . '/?action=swg-auth' . PHP_EOL : ''; ?>
 <?php echo ( get_option( 'swg-auth-auth-type' ) === 'JsonWebAPI' ) ? "useJsonWebApi=true" . PHP_EOL : ''; ?>
 validateClientVersion=<?php echo get_option( 'swg-auth-validateClientVersion', '' ) === 'on' ? 'true' : 'false'; echo PHP_EOL; ?>
 validateStationKey=<?php echo get_option( 'swg-auth-validateStationKey', '' ) === 'on' ? 'true' : 'false'; echo PHP_EOL; ?>
