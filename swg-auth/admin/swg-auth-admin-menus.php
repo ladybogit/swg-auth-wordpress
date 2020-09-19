@@ -31,6 +31,16 @@ function swg_auth_admin_menus() {
 
   add_submenu_page(
     'swg-auth-settings',
+    'SWG Server Settings (BETA)',
+    'Server Settings',
+    'administrator',
+    'swg-auth-server-settings',
+    'swg_auth_server_settings_html',
+    1
+  );
+
+  add_submenu_page(
+    'swg-auth-settings',
     'Server Config',
     'Server Config',
     'administrator',
@@ -47,6 +57,13 @@ function swg_auth_settings_html() {
     return;
   }
   include( plugin_dir_path( __FILE__ ) . 'html/swg-auth-settings-html.php' );
+}
+
+function swg_auth_server_settings_html() {
+  if ( ! current_user_can( 'manage_options' ) ) {
+    return;
+  }
+  include( plugin_dir_path( __FILE__ ) . 'html/swg-auth-server-settings-html.php' );
 }
 
 function swg_auth_server_config_html() {

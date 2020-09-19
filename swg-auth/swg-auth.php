@@ -22,11 +22,13 @@ function swg_auth_run() {
   include( plugin_dir_path( __FILE__ ) . 'includes/swg-auth-check.php' );
   include( plugin_dir_path( __FILE__ ) . 'includes/swg-auth-admin-level-check.php' );
   include( plugin_dir_path( __FILE__ ) . 'includes/swg-auth-metrics-listener.php' );
+  include( plugin_dir_path( __FILE__ ) . 'includes/swg-auth-webcfg.php' );
 }
 
 // Run Admin Stuff
 include( plugin_dir_path( __FILE__ ) . 'admin/swg-auth-admin-menus.php' );
 include( plugin_dir_path( __FILE__ ) . 'admin/swg-auth-settings.php' );
+include( plugin_dir_path( __FILE__ ) . 'admin/swg-auth-server-settings.php' );
 include( plugin_dir_path( __FILE__ ) . 'admin/swg-auth-user-settings.php' );
 
 // Run Public Stuff
