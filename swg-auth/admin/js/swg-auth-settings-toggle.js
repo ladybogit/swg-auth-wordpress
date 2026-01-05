@@ -1,35 +1,53 @@
 jQuery(document).ready(function($) {
   
-  // Function to toggle CSS options visibility
   function toggleCssOptions() {
     var matchTheme = $('#swg-auth-match-theme').is(':checked');
     var globalStyle = $('#swg-auth-global-style').is(':checked');
     
-    // Global Style option hides when Match Theme is true
-    if (matchTheme) {
-      $('.swg-auth-css-option').hide();
-      $('.swg-auth-advanced-css-option').hide();
-      $('.swg-auth-css-subtabs').hide();
-    } else {
-      $('.swg-auth-css-option').show();
+    // Find the Match Theme checkbox row
+    var matchThemeRow = $('#swg-auth-match-theme').closest('tr');
+    
+    // Find all rows after Match Theme row in the same table
+    var allCssRows = matchThemeRow.nextAll('tr');
+    
+    if (!matchTheme) {
+      // Show Global Style row
+      allCssRows.first().show();
       
-      // Advanced options (colors/fonts) only show when Match Theme is false AND Global Style is true
       if (globalStyle) {
-        $('.swg-auth-advanced-css-option').show();
+        // Show all CSS option rows, hide subtabs
+        allCssRows.show();
         $('.swg-auth-css-subtabs').hide();
       } else {
-        $('.swg-auth-advanced-css-option').hide();
+        // Hide CSS option rows except Global Style, show subtabs
+        allCssRows.not(':first').hide();
         $('.swg-auth-css-subtabs').show();
+        switchCssSubTab($('.swg-auth-css-subtabs .nav-tab-active').data('subtab') || 'general');
       }
+    } else {
+      // Hide all CSS options when Match Theme is checked
+      allCssRows.hide();
+      $('.swg-auth-css-subtabs').hide();
     }
   }
   
-  // Run on page load
-  toggleCssOptions();
+  function switchCssSubTab(subtab) {
+    $('.swg-auth-subtab-content').hide();
+    $('.swg-auth-subtab-content[data-subtab="' + subtab + '"]').show();
+    $('.swg-auth-css-subtabs .nav-tab').removeClass('nav-tab-active');
+    $('.swg-auth-css-subtabs .nav-tab[data-subtab="' + subtab + '"]').addClass('nav-tab-active');
+  }
   
-  // Run when checkboxes change
-  $('#swg-auth-match-theme, #swg-auth-global-style').on('change', function() {
-    toggleCssOptions();
+  // Run on load
+  setTimeout(toggleCssOptions, 100);
+  
+  // Run on checkbox change
+  $('#swg-auth-match-theme, #swg-auth-global-style').on('change', toggleCssOptions);
+  
+  // Handle subtab clicks
+  $('.swg-auth-css-subtabs .nav-tab').on('click', function(e) {
+    e.preventDefault();
+    switchCssSubTab($(this).data('subtab'));
   });
   
 });

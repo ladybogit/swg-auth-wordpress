@@ -16,6 +16,48 @@ if ( ! defined( 'ABSPATH' ) ) {
   die;
 }
 
+// Helper function to extract theme colors
+function swg_auth_get_theme_color( $type = 'primary' ) {
+  // Try to get CSS custom properties from the active theme
+  $theme_mods = get_theme_mods();
+  
+  switch ( $type ) {
+    case 'primary':
+      // Check common theme mod names for primary color
+      if ( isset( $theme_mods['primary_color'] ) ) return $theme_mods['primary_color'];
+      if ( isset( $theme_mods['link_color'] ) ) return $theme_mods['link_color'];
+      if ( isset( $theme_mods['accent_color'] ) ) return $theme_mods['accent_color'];
+      return '#2271b1';
+      
+    case 'background':
+      if ( isset( $theme_mods['background_color'] ) ) return '#' . $theme_mods['background_color'];
+      return '#ffffff';
+      
+    case 'text':
+      if ( isset( $theme_mods['text_color'] ) ) return $theme_mods['text_color'];
+      return '#23282d';
+      
+    case 'border':
+      if ( isset( $theme_mods['border_color'] ) ) return $theme_mods['border_color'];
+      return '#dddddd';
+      
+    default:
+      return '';
+  }
+}
+
+// Helper function to get theme font family
+function swg_auth_get_theme_font() {
+  $theme_mods = get_theme_mods();
+  
+  // Check common theme mod names for font
+  if ( isset( $theme_mods['font_family'] ) ) return $theme_mods['font_family'];
+  if ( isset( $theme_mods['body_font'] ) ) return $theme_mods['body_font'];
+  if ( isset( $theme_mods['typography_body_font'] ) ) return $theme_mods['typography_body_font'];
+  
+  return 'inherit';
+}
+
 // Include some includes
 include( plugin_dir_path( __FILE__ ) . 'includes/swg-auth-oci.php' );
 
@@ -61,11 +103,11 @@ function swg_auth_custom_styles_output() {
     <style type="text/css">
       <?php if ( $global_style ) : 
         // Use global CSS options for all components
-        $primary_color = get_option( 'swg-auth-primary-color', '#2271b1' );
-        $background_color = get_option( 'swg-auth-background-color', '#ffffff' );
-        $text_color = get_option( 'swg-auth-text-color', '#23282d' );
-        $border_color = get_option( 'swg-auth-border-color', '#dddddd' );
-        $font_family = get_option( 'swg-auth-font-family', 'inherit' );
+        $primary_color = get_option( 'swg-auth-primary-color', swg_auth_get_theme_color('primary') );
+        $background_color = get_option( 'swg-auth-background-color', swg_auth_get_theme_color('background') );
+        $text_color = get_option( 'swg-auth-text-color', swg_auth_get_theme_color('text') );
+        $border_color = get_option( 'swg-auth-border-color', swg_auth_get_theme_color('border') );
+        $font_family = get_option( 'swg-auth-font-family', swg_auth_get_theme_font() );
         $font_size = get_option( 'swg-auth-font-size', '' );
         $font_weight = get_option( 'swg-auth-font-weight', '' );
         $line_height = get_option( 'swg-auth-line-height', '' );

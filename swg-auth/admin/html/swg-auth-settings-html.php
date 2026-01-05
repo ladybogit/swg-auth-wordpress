@@ -42,21 +42,21 @@ $active_css_subtab = isset( $_GET['css_subtab'] ) ? sanitize_text_field( $_GET['
       // Main CSS settings
       do_settings_sections( 'swg-auth-settings-css' );
       ?>
-      <div class="swg-auth-css-subtabs" style="display:none;">
+      <div class="swg-auth-css-subtabs">
         <h2 class="nav-tab-wrapper" style="margin-top: 20px;">
-          <a href="?page=swg-auth-settings&tab=css&css_subtab=general" class="nav-tab <?php echo $active_css_subtab === 'general' ? 'nav-tab-active' : ''; ?>">General Pages</a>
-          <a href="?page=swg-auth-settings&tab=css&css_subtab=resources" class="nav-tab <?php echo $active_css_subtab === 'resources' ? 'nav-tab-active' : ''; ?>">Resources Page</a>
-          <a href="?page=swg-auth-settings&tab=css&css_subtab=widget" class="nav-tab <?php echo $active_css_subtab === 'widget' ? 'nav-tab-active' : ''; ?>">Metrics Widget</a>
+          <a href="#" class="nav-tab <?php echo $active_css_subtab === 'general' ? 'nav-tab-active' : ''; ?>" data-subtab="general">General Pages</a>
+          <a href="#" class="nav-tab <?php echo $active_css_subtab === 'resources' ? 'nav-tab-active' : ''; ?>" data-subtab="resources">Resources Page</a>
+          <a href="#" class="nav-tab <?php echo $active_css_subtab === 'widget' ? 'nav-tab-active' : ''; ?>" data-subtab="widget">Metrics Widget</a>
         </h2>
-        <?php
-        if ( $active_css_subtab === 'general' ) {
-          do_settings_sections( 'swg-auth-settings-css-general' );
-        } elseif ( $active_css_subtab === 'resources' ) {
-          do_settings_sections( 'swg-auth-settings-css-resources' );
-        } elseif ( $active_css_subtab === 'widget' ) {
-          do_settings_sections( 'swg-auth-settings-css-widget' );
-        }
-        ?>
+        <div class="swg-auth-subtab-content" data-subtab="general" style="display:none;">
+          <?php do_settings_sections( 'swg-auth-settings-css-general' ); ?>
+        </div>
+        <div class="swg-auth-subtab-content" data-subtab="resources" style="display:none;">
+          <?php do_settings_sections( 'swg-auth-settings-css-resources' ); ?>
+        </div>
+        <div class="swg-auth-subtab-content" data-subtab="widget" style="display:none;">
+          <?php do_settings_sections( 'swg-auth-settings-css-widget' ); ?>
+        </div>
       </div>
       <?php
     }

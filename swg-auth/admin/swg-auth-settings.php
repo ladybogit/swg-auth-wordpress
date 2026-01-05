@@ -288,7 +288,7 @@ function swg_auth_settings() {
       'description' => 'Match WordPress theme styles',
       'sanitize_callback' => 'swg_auth_sanitize_checkbox',
       'show_in_rest' => false,
-      'default' => false
+      'default' => true
     )
   );
 
@@ -312,7 +312,7 @@ function swg_auth_settings() {
       'description' => 'Apply styles globally',
       'sanitize_callback' => 'swg_auth_sanitize_checkbox',
       'show_in_rest' => false,
-      'default' => false
+      'default' => true
     )
   );
 
@@ -800,7 +800,7 @@ function swg_auth_css_settings_html( $args ) {
 }
 
 function swg_auth_match_theme_html( $args ) {
-  $checked = ( get_option( 'swg-auth-match-theme', 'off' ) === 'on' ) ? 'checked' : '';
+  $checked = ( get_option( 'swg-auth-match-theme', 'on' ) === 'on' ) ? 'checked' : '';
   ?>
   <input type="hidden" name="swg-auth-match-theme" value="off">
   <label for="swg-auth-match-theme">
@@ -811,7 +811,7 @@ function swg_auth_match_theme_html( $args ) {
 }
 
 function swg_auth_global_style_html( $args ) {
-  $checked = ( get_option( 'swg-auth-global-style', 'off' ) === 'on' ) ? 'checked' : '';
+  $checked = ( get_option( 'swg-auth-global-style', 'on' ) === 'on' ) ? 'checked' : '';
   ?>
   <input type="hidden" name="swg-auth-global-style" value="off">
   <label for="swg-auth-global-style">
