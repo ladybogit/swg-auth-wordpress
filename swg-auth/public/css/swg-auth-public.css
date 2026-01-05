@@ -1,0 +1,510 @@
+/**
+ * SWG Auth - Public/Frontend Styles
+ * Version: 0.15
+ * Consolidated public styles for better organization
+ */
+
+/* ============================================
+   Virtual Pages & General Layout
+   ============================================ */
+
+.swg-auth-page {
+  /* Spacing */
+  padding: 20px 0;
+  margin: 0 auto;
+  max-width: 1200px;
+  
+  /* Colors */
+  background-color: #ffffff;
+  color: #23282d;
+  
+  /* Typography */
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0px;
+  
+  /* Borders */
+  border: 0px solid #dddddd;
+  border-radius: 0px;
+  
+  /* Effects */
+  box-shadow: none;
+  opacity: 1;
+}
+
+.swg-auth-page h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #23282d;
+  font-weight: 600;
+}
+
+.swg-auth-page h2 {
+  font-size: 1.8em;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #23282d;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.swg-auth-page h3 {
+  font-size: 1.4em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: #23282d;
+}
+
+.swg-auth-page a {
+  color: #2271b1;
+  text-decoration: none;
+}
+
+.swg-auth-page a:hover {
+  color: #135e96;
+  text-decoration: underline;
+}
+
+/* ============================================
+   Metrics Widget Styles
+   ============================================ */
+
+.widget_swg-auth-metrics {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.widget_swg-auth-metrics .widget-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #2271b1;
+  color: #23282d;
+}
+
+table.swg-auth-metrics-widget {
+  border: 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.swg-auth-metrics-widget tr {
+  border: 0;
+}
+
+table.swg-auth-metrics-widget td {
+  border: 0;
+  padding: 8px 4px;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+table.swg-auth-metrics-widget td:first-child {
+  font-weight: 600;
+  color: #555;
+  width: 40%;
+}
+
+table.swg-auth-metrics-widget td:last-child {
+  color: #23282d;
+  text-align: right;
+}
+
+/* Server Status LED Indicators */
+.swg-auth-red-light,
+.swg-auth-yellow-light,
+.swg-auth-green-light {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 8px 0 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+}
+
+.swg-auth-red-light {
+  background-color: #ff0000;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 12px;
+  animation: swg-auth-blink-red 0.5s infinite;
+}
+
+.swg-auth-yellow-light {
+  background-color: #ffff00;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #ffff00 0 2px 12px;
+  animation: swg-auth-blink-yellow 1s infinite;
+}
+
+.swg-auth-green-light {
+  background-color: #00ff00;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #304701 0 -1px 9px, #89ff00 0 2px 12px;
+}
+
+/* LED Animations */
+@keyframes swg-auth-blink-red {
+  from { background-color: #ff0000; }
+  50% { 
+    background-color: #aa0000; 
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #441313 0 -1px 9px, rgba(255, 0, 0, 0.5) 0 2px 0;
+  }
+  to { background-color: #ff0000; }
+}
+
+@keyframes swg-auth-blink-yellow {
+  from { background-color: #ffff00; }
+  50% { 
+    background-color: #aaaa00; 
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #ffff00 0 2px 0;
+  }
+  to { background-color: #ffff00; }
+}
+
+/* ============================================
+   Resources Browser Styles
+   ============================================ */
+
+/* Resource List Table */
+table.swg-auth-resource-page {
+  margin: 20px 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+table.swg-auth-resource-page tr {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  transition: background-color 0.2s;
+}
+
+table.swg-auth-resource-page tr:hover {
+  background-color: #f6f7f7;
+}
+
+table.swg-auth-resource-page td {
+  margin: 0;
+  padding: 12px;
+  border: 0;
+  vertical-align: middle;
+}
+
+table.swg-auth-resource-page a {
+  text-decoration: none;
+  color: #2271b1;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+table.swg-auth-resource-page a:hover {
+  color: #135e96;
+  text-decoration: underline;
+}
+
+/* Resource Attribute Table (within resource table) */
+table.swg-auth-resource-page table.swg-auth-resource-attribute-table {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: auto;
+}
+
+table.swg-auth-resource-page table.swg-auth-resource-attribute-table tr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+table.swg-auth-resource-page table.swg-auth-resource-attribute-table tr:hover {
+  background-color: transparent;
+}
+
+table.swg-auth-resource-page table.swg-auth-resource-attribute-table td {
+  margin: 0;
+  padding: 2px 8px 2px 0;
+  border: 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Single Resource Page */
+div.swg-auth-single-resource-page {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  margin: 20px 0;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-class-breadcrumbs {
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-class-breadcrumbs a {
+  color: #2271b1;
+  text-decoration: none;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-class-breadcrumbs a:hover {
+  text-decoration: underline;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name img {
+  width: 64px;
+  height: 64px;
+  margin-right: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name span.swg-auth-resource-name {
+  font-size: 1.8em;
+  font-weight: 600;
+  color: #23282d;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-deplete-time {
+  width: 50%;
+  margin: auto 0;
+  text-align: right;
+  font-size: 14px;
+  color: #666;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-attributes {
+  width: 50%;
+  margin-top: 20px;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-attributes h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #23282d;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-planets {
+  width: 50%;
+  margin-top: 20px;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-planets h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #23282d;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-planets ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+div.swg-auth-single-resource-page div.swg-auth-resource-planets li {
+  padding: 3px 0;
+  font-size: 14px;
+}
+
+/* Resource Attributes Table */
+table.swg-auth-single-resource-attribute-table {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  width: auto;
+}
+
+table.swg-auth-single-resource-attribute-table tr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+table.swg-auth-single-resource-attribute-table td {
+  margin: 0;
+  padding: 6px 20px 6px 10px;
+  border: 0;
+  vertical-align: bottom;
+  font-size: 14px;
+}
+
+table.swg-auth-single-resource-attribute-table td:first-child {
+  font-weight: 600;
+  color: #555;
+}
+
+table.swg-auth-single-resource-attribute-table td:last-child {
+  color: #23282d;
+  text-align: right;
+}
+
+/* Resource Icons */
+.swg-auth-resource-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+  vertical-align: middle;
+  border-radius: 3px;
+}
+
+/* ============================================
+   Loading & Empty States
+   ============================================ */
+
+.swg-auth-loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-size: 16px;
+}
+
+.swg-auth-loading::before {
+  content: "⏳";
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.swg-auth-empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-style: italic;
+}
+
+.swg-auth-error {
+  background: #fbeaea;
+  border-left: 4px solid #dc3232;
+  padding: 15px 20px;
+  margin: 20px 0;
+  border-radius: 2px;
+  color: #dc3232;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media screen and (max-width: 768px) {
+  .swg-auth-page h1 {
+    font-size: 2em;
+  }
+
+  .swg-auth-page h2 {
+    font-size: 1.5em;
+  }
+
+  div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name,
+  div.swg-auth-single-resource-page div.swg-auth-resource-deplete-time,
+  div.swg-auth-single-resource-page div.swg-auth-resource-attributes,
+  div.swg-auth-single-resource-page div.swg-auth-resource-planets {
+    width: 100%;
+  }
+
+  div.swg-auth-single-resource-page div.swg-auth-resource-deplete-time {
+    text-align: left;
+    margin-top: 10px;
+  }
+
+  table.swg-auth-resource-page td {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .widget_swg-auth-metrics {
+    padding: 15px;
+  }
+
+  table.swg-auth-metrics-widget td {
+    font-size: 13px;
+  }
+}
+
+/* ============================================
+   Dark Mode Support
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  .swg-auth-page h1,
+  .swg-auth-page h2,
+  .swg-auth-page h3 {
+    color: #f0f0f1;
+  }
+
+  .widget_swg-auth-metrics,
+  div.swg-auth-single-resource-page,
+  table.swg-auth-resource-page {
+    background: #1d2327;
+    border-color: #3c434a;
+  }
+
+  table.swg-auth-resource-page tr:hover {
+    background-color: #2c3338;
+  }
+
+  table.swg-auth-metrics-widget td:first-child,
+  table.swg-auth-single-resource-attribute-table td:first-child,
+  table.swg-auth-resource-page table.swg-auth-resource-attribute-table td {
+    color: #a7aaad;
+  }
+
+  table.swg-auth-metrics-widget td:last-child,
+  table.swg-auth-single-resource-attribute-table td:last-child,
+  div.swg-auth-single-resource-page div.swg-auth-resource-icon-and-name span.swg-auth-resource-name {
+    color: #f0f0f1;
+  }
+
+  .widget_swg-auth-metrics .widget-title {
+    color: #f0f0f1;
+    border-bottom-color: #72aee6;
+  }
+
+  table.swg-auth-resource-page a {
+    color: #72aee6;
+  }
+
+  table.swg-auth-resource-page a:hover {
+    color: #9cc3db;
+  }
+
+  div.swg-auth-single-resource-page div.swg-auth-resource-class-breadcrumbs,
+  div.swg-auth-single-resource-page div.swg-auth-resource-deplete-time,
+  div.swg-auth-single-resource-page div.swg-auth-resource-planets li {
+    color: #a7aaad;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .swg-auth-red-light,
+  .swg-auth-yellow-light,
+  .swg-auth-green-light {
+    animation: none;
+  }
+
+  .widget_swg-auth-metrics,
+  div.swg-auth-single-resource-page,
+  table.swg-auth-resource-page {
+    box-shadow: none;
+  }
+}

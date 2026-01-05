@@ -3,7 +3,7 @@ Contributors: tekaoh
 Tags: admin, integration
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.14
+Stable tag: 0.15
 Requires PHP: 7.4
 License: The Unlicense
 License URI: https://unlicense.org
@@ -22,6 +22,15 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 4. Done!
 
 == Changelog ==
+
+= 0.15 =
+* Added comprehensive CSS customization system with tabbed settings interface
+* New "Match Theme" option to use your WordPress theme's default styles
+* Global Style mode: Apply unified CSS settings across all plugin components
+* Component-specific styling: Customize General Pages, Resources Page, and Metrics Widget individually
+* 17 CSS options per component including colors, fonts, spacing, borders, shadows, and opacity
+* Custom CSS textarea fields for advanced customization
+* Dynamic settings visibility based on customization mode selection
 
 = 0.14 =
 * PHP 8.0, 8.1, 8.2, and 8.3 compatibility
@@ -79,6 +88,9 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 * Authentication is functional
 
 == Upgrade Notice ==
+
+= 0.15 =
+* Major CSS customization features added
 
 = 0.13 =
 * Web Configs

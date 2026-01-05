@@ -1,3 +1,38 @@
+.widget_swg-auth-metrics {
+  /* Spacing */
+  padding: 20px;
+  margin: 0px;
+  
+  /* Colors */
+  background-color: #ffffff;
+  color: #23282d;
+  
+  /* Typography */
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0px;
+  
+  /* Borders */
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  
+  /* Effects */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  opacity: 1;
+}
+
+.widget_swg-auth-metrics a {
+  color: #2271b1;
+  text-decoration: none;
+}
+
+.widget_swg-auth-metrics a:hover {
+  color: #135e96;
+  text-decoration: underline;
+}
+
 table.swg-auth-metrics-widget {
   border: 0px;
 }
