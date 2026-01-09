@@ -16,6 +16,12 @@ if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth-admin-level' && i
 
   // Look up the user
   $user = get_user_by( 'login', $_POST['user_name'] );
+	// If user not found, return 0
+	if ( ! $user ) {
+		$response['message'] = '0';
+		echo json_encode( $response );
+		die;
+	}
   // Look up the user's Admin level
   $level = get_user_meta( $user->ID, 'swg-auth-admin-level', true );
 

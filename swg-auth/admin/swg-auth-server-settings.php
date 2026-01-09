@@ -1,31 +1,42 @@
 <?php
+/**
+ * SWG Auth Server Settings Configuration
+ *
+ * @package SWG_Auth
+ * @since 1.0.0
+ */
 
-// No Direct Access
+// No Direct Access.
 if ( ! defined( 'ABSPATH' ) ) {
-  die;
+	die;
 }
 
 add_action( 'admin_init', 'swg_auth_server_settings' );
+/**
+ * Register all server settings
+ *
+ * @since 1.0.0
+ */
 function swg_auth_server_settings() {
 
-  add_settings_section(
-    'swg-auth-server-settings',
-    'General',
-    'swg_auth_server_settings_section_html',
-    'swg-auth-general-server-settings'
-  );
+	add_settings_section(
+		'swg-auth-server-settings',
+		'General',
+		'swg_auth_server_settings_section_html',
+		'swg-auth-general-server-settings'
+	);
 
-  register_setting(
-    'swg-auth-general-server-settings',
-    'swg-auth-cluster-name',
-    array(
-      'type' => 'string',
-      'description' => 'Cluster Name',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => 'swg'
-    )
-  );
+	register_setting(
+		'swg-auth-general-server-settings',
+		'swg-auth-cluster-name',
+		array(
+			'type'              => 'string',
+			'description'       => 'Cluster Name',
+			'sanitize_callback' => 'sanitize_text_field',
+			'show_in_rest'      => false,
+			'default'           => 'swg',
+		)
+	);
 
   add_settings_field(
     'swg-auth-cluster-name',
@@ -39,17 +50,17 @@ function swg_auth_server_settings() {
     )
   );
 
-  register_setting(
-    'swg-auth-general-server-settings',
-    'swg-auth-server-ip',
-    array(
-      'type' => 'string',
-      'description' => 'Server IP',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => '192.168.0.0'
-    )
-  );
+	register_setting(
+		'swg-auth-general-server-settings',
+		'swg-auth-server-ip',
+		array(
+			'type'              => 'string',
+			'description'       => 'Server IP Address',
+			'sanitize_callback' => 'sanitize_text_field',
+			'show_in_rest'      => false,
+			'default'           => '192.168.0.0',
+		)
+	);
 
   add_settings_field(
     'swg-auth-server-ip',
@@ -63,17 +74,17 @@ function swg_auth_server_settings() {
     )
   );
 
-  register_setting(
-    'swg-auth-general-server-settings',
-    'swg-auth-webUpdateIntervalSeconds',
-    array(
-      'type' => 'integer',
-      'description' => 'webUpdateIntervalSeconds',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => '10'
-    )
-  );
+	register_setting(
+		'swg-auth-general-server-settings',
+		'swg-auth-webUpdateIntervalSeconds',
+		array(
+			'type'              => 'integer',
+			'description'       => 'Web update interval in seconds',
+			'sanitize_callback' => 'absint',
+			'show_in_rest'      => false,
+			'default'           => 10,
+		)
+	);
 
   add_settings_field(
     'swg-auth-webUpdateIntervalSeconds',
@@ -87,17 +98,17 @@ function swg_auth_server_settings() {
     )
   );
 
-  register_setting(
-    'swg-auth-general-server-settings',
-    'swg-auth-easyExternalAccess',
-    array(
-      'type' => 'boolean',
-      'description' => 'easyExternalAccess',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => ''
-    )
-  );
+	register_setting(
+		'swg-auth-general-server-settings',
+		'swg-auth-easyExternalAccess',
+		array(
+			'type'              => 'boolean',
+			'description'       => 'Enable easy external access',
+			'sanitize_callback' => 'swg_auth_sanitize_checkbox',
+			'show_in_rest'      => false,
+			'default'           => '',
+		)
+	);
 
   add_settings_field(
     'swg-auth-easyExternalAccess',
@@ -111,17 +122,17 @@ function swg_auth_server_settings() {
     )
   );
 
-  register_setting(
-    'swg-auth-general-server-settings',
-    'swg-auth-useExternalAuth',
-    array(
-      'type' => 'boolean',
-      'description' => 'useExternalAuth',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => 'on'
-    )
-  );
+	register_setting(
+		'swg-auth-general-server-settings',
+		'swg-auth-useExternalAuth',
+		array(
+			'type'              => 'boolean',
+			'description'       => 'Use external authentication',
+			'sanitize_callback' => 'swg_auth_sanitize_checkbox',
+			'show_in_rest'      => false,
+			'default'           => 'on',
+		)
+	);
 
   add_settings_field(
     'swg-auth-useExternalAuth',
@@ -135,17 +146,17 @@ function swg_auth_server_settings() {
     )
   );
 
-  register_setting(
-    'swg-auth-general-server-settings',
-    'swg-auth-externalAdminLevelsEnabled',
-    array(
-      'type' => 'boolean',
-      'description' => 'externalAdminLevelsEnabled',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => 'on'
-    )
-  );
+	register_setting(
+		'swg-auth-general-server-settings',
+		'swg-auth-externalAdminLevelsEnabled',
+		array(
+			'type'              => 'boolean',
+			'description'       => 'Enable external admin levels',
+			'sanitize_callback' => 'swg_auth_sanitize_checkbox',
+			'show_in_rest'      => false,
+			'default'           => 'on',
+		)
+	);
 
   add_settings_field(
     'swg-auth-externalAdminLevelsEnabled',
@@ -159,17 +170,17 @@ function swg_auth_server_settings() {
     )
   );
 
-  register_setting(
-    'swg-auth-general-server-settings',
-    'swg-auth-reverseEngineeringBonusMultiplier',
-    array(
-      'type' => 'number',
-      'description' => 'reverseEngineeringBonusMultiplier',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => '1.0'
-    )
-  );
+	register_setting(
+		'swg-auth-general-server-settings',
+		'swg-auth-reverseEngineeringBonusMultiplier',
+		array(
+			'type'              => 'number',
+			'description'       => 'Reverse engineering bonus multiplier',
+			'sanitize_callback' => 'floatval',
+			'show_in_rest'      => false,
+			'default'           => 1.0,
+		)
+	);
 
   add_settings_field(
     'swg-auth-reverseEngineeringBonusMultiplier',
@@ -183,17 +194,17 @@ function swg_auth_server_settings() {
     )
   );
 
-  register_setting(
-    'swg-auth-general-server-settings',
-    'swg-auth-chroniclesXpModifier',
-    array(
-      'type' => 'number',
-      'description' => 'chroniclesXpModifier',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => '1.0'
-    )
-  );
+	register_setting(
+		'swg-auth-general-server-settings',
+		'swg-auth-chroniclesXpModifier',
+		array(
+			'type'              => 'number',
+			'description'       => 'Chronicles experience modifier',
+			'sanitize_callback' => 'floatval',
+			'show_in_rest'      => false,
+			'default'           => 1.0,
+		)
+	);
 
   add_settings_field(
     'swg-auth-chroniclesXpModifier',
@@ -7000,6 +7011,20 @@ function swg_auth_server_settings() {
     )
   );
 
+}
+
+/**
+ * Sanitize checkbox values
+ * This function is shared between settings files
+ *
+ * @since 1.0.0
+ * @param mixed $input Input value to sanitize.
+ * @return string Returns 'on' or 'off'.
+ */
+if ( ! function_exists( 'swg_auth_sanitize_checkbox' ) ) {
+	function swg_auth_sanitize_checkbox( $input ) {
+		return ( 'on' === $input ) ? 'on' : 'off';
+	}
 }
 
 function swg_auth_server_settings_section_html( $args ) {

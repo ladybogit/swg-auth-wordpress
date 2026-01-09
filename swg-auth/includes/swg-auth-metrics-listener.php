@@ -22,7 +22,7 @@ if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth-metrics' ) {
 
   // Have we set a new record for the highest population?
   $old_data = get_option( 'swg-auth-metrics-data' );
-  if ( ! array_key_exists( 'highestPlayerCount', $old_data ) || $old_data['highestPlayerCount'] < $data['totalPlayerCount'] ) {
+	if ( ! is_array( $old_data ) || ! array_key_exists( 'highestPlayerCount', $old_data ) || $old_data['highestPlayerCount'] < $data['totalPlayerCount'] ) {
     // If so, save the data for our new record
     $data['highestPlayerCount'] = $data['totalPlayerCount'];
     $data['highestPlayerCountTimestamp'] = $data['timestamp'];

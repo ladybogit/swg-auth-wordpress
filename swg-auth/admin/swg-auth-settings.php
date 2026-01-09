@@ -1,32 +1,43 @@
 <?php
+/**
+ * SWG Auth Settings Configuration
+ *
+ * @package SWG_Auth
+ * @since 1.0.0
+ */
 
-// No Direct Access
+// No Direct Access.
 if ( ! defined( 'ABSPATH' ) ) {
-  die;
+	die;
 }
 
 add_action( 'admin_init', 'swg_auth_settings' );
+/**
+ * Register all plugin settings
+ *
+ * @since 1.0.0
+ */
 function swg_auth_settings() {
 
-  // === GENERAL SETTINGS TAB ===
-  add_settings_section(
-    'swg-auth-general-settings',
-    'General Settings',
-    'swg_auth_general_settings_html',
-    'swg-auth-settings-general'
-  );
+	// === GENERAL SETTINGS TAB ===
+	add_settings_section(
+		'swg-auth-general-settings',
+		'General Settings',
+		'swg_auth_general_settings_html',
+		'swg-auth-settings-general'
+	);
 
-  register_setting(
-    'swg-auth-settings-general',
-    'swg-auth-approval-required',
-    array(
-      'type' => 'boolean',
-      'description' => 'Whether approval is required for game access.',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => false
-    )
-  );
+	register_setting(
+		'swg-auth-settings-general',
+		'swg-auth-approval-required',
+		array(
+			'type'              => 'boolean',
+			'description'       => 'Whether approval is required for game access.',
+			'sanitize_callback' => 'swg_auth_sanitize_checkbox',
+			'show_in_rest'      => false,
+			'default'           => false,
+		)
+	);
 
   add_settings_field(
     'swg-auth-approval-required',
@@ -40,17 +51,17 @@ function swg_auth_settings() {
     )
   );
 
-  register_setting(
-    'swg-auth-settings-general',
-    'swg-auth-auth-type',
-    array(
-      'type' => 'string',
-      'description' => 'What type of auth is to be used.',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => 'WebAPI'
-    )
-  );
+	register_setting(
+		'swg-auth-settings-general',
+		'swg-auth-auth-type',
+		array(
+			'type'              => 'string',
+			'description'       => 'Authentication type to be used.',
+			'sanitize_callback' => 'swg_auth_sanitize_auth_type',
+			'show_in_rest'      => false,
+			'default'           => 'WebAPI',
+		)
+	);
 
   add_settings_field(
     'swg-auth-auth-type',
@@ -76,11 +87,11 @@ function swg_auth_settings() {
     'swg-auth-settings-database',
     'swg-auth-odb-username',
     array(
-      'type' => 'string',
-      'description' => 'Oracle Username',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => 'swg'
+      'type'              => 'string',
+      'description'       => 'Oracle Database Username',
+      'sanitize_callback' => 'swg_auth_sanitize_db_username',
+      'show_in_rest'      => false,
+      'default'           => 'swg',
     )
   );
 
@@ -100,11 +111,11 @@ function swg_auth_settings() {
     'swg-auth-settings-database',
     'swg-auth-odb-password',
     array(
-      'type' => 'string',
-      'description' => 'Oracle Password',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => 'swg'
+      'type'              => 'string',
+      'description'       => 'Oracle Database Password',
+      'sanitize_callback' => 'swg_auth_sanitize_db_password',
+      'show_in_rest'      => false,
+      'default'           => 'swg',
     )
   );
 
@@ -124,11 +135,11 @@ function swg_auth_settings() {
     'swg-auth-settings-database',
     'swg-auth-odb-sid',
     array(
-      'type' => 'string',
-      'description' => 'Oracle SID',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => 'swg'
+      'type'              => 'string',
+      'description'       => 'Oracle Database SID',
+      'sanitize_callback' => 'swg_auth_sanitize_db_sid',
+      'show_in_rest'      => false,
+      'default'           => 'swg',
     )
   );
 
@@ -148,11 +159,11 @@ function swg_auth_settings() {
     'swg-auth-settings-database',
     'swg-auth-odb-ip',
     array(
-      'type' => 'string',
-      'description' => 'Oracle IP Address',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => 'localhost'
+      'type'              => 'string',
+      'description'       => 'Oracle Database IP Address or Hostname',
+      'sanitize_callback' => 'swg_auth_sanitize_db_host',
+      'show_in_rest'      => false,
+      'default'           => 'localhost',
     )
   );
 
@@ -172,11 +183,11 @@ function swg_auth_settings() {
     'swg-auth-settings-database',
     'swg-auth-odb-port',
     array(
-      'type' => 'string',
-      'description' => 'Oracle Port',
-      'sanitize_callback' => '', // TODO: A callback function that sanitizes the option's value.
-      'show_in_rest' => false,
-      'default' => '1521'
+      'type'              => 'string',
+      'description'       => 'Oracle Database Port',
+      'sanitize_callback' => 'swg_auth_sanitize_db_port',
+      'show_in_rest'      => false,
+      'default'           => '1521',
     )
   );
 
@@ -707,68 +718,287 @@ function swg_auth_settings() {
 }
 
 function swg_auth_general_settings_html( $args ) {
-  echo '';
+	echo '';
 }
 
-// Sanitize checkbox values
-function swg_auth_sanitize_checkbox( $input ) {
-  return ( $input === 'on' ) ? 'on' : 'off';
+/**
+ * Sanitize checkbox values
+ *
+ * @since 1.0.0
+ * @param mixed $input Input value to sanitize.
+ * @return string Returns 'on' or 'off'.
+ */
+if ( ! function_exists( 'swg_auth_sanitize_checkbox' ) ) {
+	function swg_auth_sanitize_checkbox( $input ) {
+		return ( 'on' === $input ) ? 'on' : 'off';
+	}
 }
 
+/**
+ * Sanitize auth type value
+ *
+ * @since 1.0.0
+ * @param string $input Auth type to sanitize.
+ * @return string Returns valid auth type or default.
+ */
+function swg_auth_sanitize_auth_type( $input ) {
+	$valid_types = array( 'WebAPI', 'JsonWebAPI' );
+	return in_array( $input, $valid_types, true ) ? $input : 'WebAPI';
+}
+
+/**
+ * Sanitize database username
+ *
+ * @since 1.0.0
+ * @param string $input Username to sanitize.
+ * @return string Sanitized username.
+ */
+function swg_auth_sanitize_db_username( $input ) {
+	// Allow alphanumeric, underscores, and hyphens only.
+	return sanitize_text_field( $input );
+}
+
+/**
+ * Sanitize database password
+ *
+ * @since 1.0.0
+ * @param string $input Password to sanitize.
+ * @return string Sanitized password.
+ */
+function swg_auth_sanitize_db_password( $input ) {
+	// Passwords can contain special characters, so we just trim whitespace.
+	return trim( $input );
+}
+
+/**
+ * Sanitize database SID
+ *
+ * @since 1.0.0
+ * @param string $input SID to sanitize.
+ * @return string Sanitized SID.
+ */
+function swg_auth_sanitize_db_sid( $input ) {
+	// Allow alphanumeric and underscores only.
+	return sanitize_text_field( $input );
+}
+
+/**
+ * Sanitize database host (IP address or hostname)
+ *
+ * @since 1.0.0
+ * @param string $input Host to sanitize.
+ * @return string Sanitized host.
+ */
+function swg_auth_sanitize_db_host( $input ) {
+	// Remove any protocols and sanitize.
+	$input = str_replace( array( 'http://', 'https://', 'ftp://' ), '', $input );
+	return sanitize_text_field( trim( $input ) );
+}
+
+/**
+ * Sanitize database port
+ *
+ * @since 1.0.0
+ * @param string $input Port to sanitize.
+ * @return string Sanitized port number.
+ */
+function swg_auth_sanitize_db_port( $input ) {
+	// Ensure it's a valid port number (1-65535).
+	$port = intval( $input );
+	if ( $port < 1 || $port > 65535 ) {
+		$port = 1521; // Default Oracle port.
+	}
+	return (string) $port;
+}
+
+/**
+ * Display approval required checkbox field
+ *
+ * @since 1.0.0
+ * @param array $args Field arguments.
+ */
 function swg_auth_approval_required_html( $args ) {
-  ?>
-  <label for="swg-auth-approval-required">
-  <input type="checkbox" name="swg-auth-approval-required" <?php echo ( get_option( 'swg-auth-approval-required' ) === 'on' ) ? 'checked' : ''; ?>>
-  Require new accounts to be manually approved before they can login to the game.
-  </label>
-  <?php
+	$checked = ( 'on' === get_option( 'swg-auth-approval-required' ) ) ? 'checked' : '';
+	?>
+	<label for="swg-auth-approval-required">
+		<input 
+			type="checkbox" 
+			name="swg-auth-approval-required" 
+			id="swg-auth-approval-required" 
+			<?php echo esc_attr( $checked ); ?>
+		/>
+		<?php esc_html_e( 'Require new accounts to be manually approved before they can login to the game.', 'swg-auth' ); ?>
+	</label>
+	<?php
 }
 
+/**
+ * Display auth type select field
+ *
+ * @since 1.0.0
+ * @param array $args Field arguments.
+ */
 function swg_auth_auth_type_html( $args ) {
-  $current_value = get_option( 'swg-auth-auth-type' );
-  ?>
-  <select name="swg-auth-auth-type">
-    <option value="WebAPI" <?php echo ( $current_value === 'WebAPI' ) ? 'selected="selected"' : ''; ?>>WebAPI</option>
-    <option value="JsonWebAPI" <?php echo ( $current_value === 'JsonWebAPI' ) ? 'selected="selected"' : ''; ?>>JsonWebAPI</option>
-  </select>
-  <?php
+	$current_value = get_option( 'swg-auth-auth-type', 'WebAPI' );
+	?>
+	<select name="swg-auth-auth-type" id="swg-auth-auth-type">
+		<option value="WebAPI" <?php selected( $current_value, 'WebAPI' ); ?>>
+			<?php esc_html_e( 'WebAPI', 'swg-auth' ); ?>
+		</option>
+		<option value="JsonWebAPI" <?php selected( $current_value, 'JsonWebAPI' ); ?>>
+			<?php esc_html_e( 'JsonWebAPI', 'swg-auth' ); ?>
+		</option>
+	</select>
+	<p class="description">
+		<?php esc_html_e( 'Select the authentication method for the game server.', 'swg-auth' ); ?>
+	</p>
+	<?php
 }
 
+/**
+ * Display database settings section description
+ *
+ * @since 1.0.0
+ * @param array $args Section arguments.
+ */
 function swg_auth_odb_settings_html( $args ) {
-  ?>
-  <p>The PHP OCI8 extension is <strong><?php echo extension_loaded( 'OCI8' ) ? 'loaded' : 'NOT loaded'; ?></strong>.</p>
-  <p>The connection to Oracle is <strong><?php echo swg_auth_oci_connect() ? 'working' : 'NOT working'; ?></strong>.</p>
-  <?php
+	$oci_loaded      = extension_loaded( 'OCI8' );
+	$oci_connected   = swg_auth_oci_connect();
+	$loaded_status   = $oci_loaded ? 'loaded' : 'NOT loaded';
+	$loaded_class    = $oci_loaded ? 'swg-auth-status-success' : 'swg-auth-status-error';
+	$connected_status = $oci_connected ? 'working' : 'NOT working';
+	$connected_class  = $oci_connected ? 'swg-auth-status-success' : 'swg-auth-status-error';
+	?>
+	<p>
+		<?php esc_html_e( 'Configure Oracle database connection settings for SWG Auth. The OCI8 PHP extension is required.', 'swg-auth' ); ?>
+	</p>
+	<p>
+		<?php esc_html_e( 'The PHP OCI8 extension is', 'swg-auth' ); ?> 
+		<strong class="<?php echo esc_attr( $loaded_class ); ?>"><?php echo esc_html( $loaded_status ); ?></strong>.
+	</p>
+	<p>
+		<?php esc_html_e( 'The connection to Oracle is', 'swg-auth' ); ?> 
+		<strong class="<?php echo esc_attr( $connected_class ); ?>"><?php echo esc_html( $connected_status ); ?></strong>.
+	</p>
+	<?php
 }
 
+/**
+ * Display Oracle username input field
+ *
+ * @since 1.0.0
+ * @param array $args Field arguments.
+ */
 function swg_auth_odb_username_html( $args ) {
-  ?>
-  <input type="text" name="swg-auth-odb-username" value="<?php echo esc_attr( get_option( 'swg-auth-odb-username' ) ); ?>">
-  <?php
+	$value = get_option( 'swg-auth-odb-username', 'swg' );
+	?>
+	<input 
+		type="text" 
+		name="swg-auth-odb-username" 
+		id="swg-auth-odb-username" 
+		value="<?php echo esc_attr( $value ); ?>"
+		class="regular-text"
+		placeholder="<?php esc_attr_e( 'Oracle username', 'swg-auth' ); ?>"
+	/>
+	<p class="description">
+		<?php esc_html_e( 'Username for Oracle database connection.', 'swg-auth' ); ?>
+	</p>
+	<?php
 }
 
+/**
+ * Display Oracle password input field
+ *
+ * @since 1.0.0
+ * @param array $args Field arguments.
+ */
 function swg_auth_odb_password_html( $args ) {
-  ?>
-  <input type="text" name="swg-auth-odb-password" value="<?php echo esc_attr( get_option( 'swg-auth-odb-password' ) ); ?>">
-  <?php
+	$value = get_option( 'swg-auth-odb-password', 'swg' );
+	?>
+	<input 
+		type="password" 
+		name="swg-auth-odb-password" 
+		id="swg-auth-odb-password" 
+		value="<?php echo esc_attr( $value ); ?>"
+		class="regular-text"
+		autocomplete="off"
+		placeholder="<?php esc_attr_e( 'Oracle password', 'swg-auth' ); ?>"
+	/>
+	<p class="description">
+		<?php esc_html_e( 'Password for Oracle database connection.', 'swg-auth' ); ?>
+	</p>
+	<?php
 }
 
+/**
+ * Display Oracle SID input field
+ *
+ * @since 1.0.0
+ * @param array $args Field arguments.
+ */
 function swg_auth_odb_sid_html( $args ) {
-  ?>
-  <input type="text" name="swg-auth-odb-sid" value="<?php echo esc_attr( get_option( 'swg-auth-odb-sid' ) ); ?>">
-  <?php
+	$value = get_option( 'swg-auth-odb-sid', 'swg' );
+	?>
+	<input 
+		type="text" 
+		name="swg-auth-odb-sid" 
+		id="swg-auth-odb-sid" 
+		value="<?php echo esc_attr( $value ); ?>"
+		class="regular-text"
+		placeholder="<?php esc_attr_e( 'Oracle SID', 'swg-auth' ); ?>"
+	/>
+	<p class="description">
+		<?php esc_html_e( 'System identifier (SID) for the Oracle database instance.', 'swg-auth' ); ?>
+	</p>
+	<?php
 }
 
+/**
+ * Display Oracle IP address input field
+ *
+ * @since 1.0.0
+ * @param array $args Field arguments.
+ */
 function swg_auth_odb_ip_html( $args ) {
-  ?>
-  <input type="text" name="swg-auth-odb-ip" value="<?php echo esc_attr( get_option( 'swg-auth-odb-ip' ) ); ?>">
-  <?php
+	$value = get_option( 'swg-auth-odb-ip', 'localhost' );
+	?>
+	<input 
+		type="text" 
+		name="swg-auth-odb-ip" 
+		id="swg-auth-odb-ip" 
+		value="<?php echo esc_attr( $value ); ?>"
+		class="regular-text"
+		placeholder="<?php esc_attr_e( 'localhost or IP address', 'swg-auth' ); ?>"
+	/>
+	<p class="description">
+		<?php esc_html_e( 'IP address or hostname of the Oracle database server.', 'swg-auth' ); ?>
+	</p>
+	<?php
 }
 
+/**
+ * Display Oracle port input field
+ *
+ * @since 1.0.0
+ * @param array $args Field arguments.
+ */
 function swg_auth_odb_port_html( $args ) {
-  ?>
-  <input type="text" name="swg-auth-odb-port" value="<?php echo esc_attr( get_option( 'swg-auth-odb-port' ) ); ?>">
-  <?php
+	$value = get_option( 'swg-auth-odb-port', '1521' );
+	?>
+	<input 
+		type="number" 
+		name="swg-auth-odb-port" 
+		id="swg-auth-odb-port" 
+		value="<?php echo esc_attr( $value ); ?>"
+		class="small-text"
+		min="1"
+		max="65535"
+		placeholder="1521"
+	/>
+	<p class="description">
+		<?php esc_html_e( 'Port number for Oracle database connection (default: 1521).', 'swg-auth' ); ?>
+	</p>
+	<?php
 }
 
 function swg_auth_secret_keys_html( $args ) {

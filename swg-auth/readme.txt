@@ -1,14 +1,14 @@
 === SWG Auth ===
 Contributors: tekaoh
-Tags: admin, integration
+Tags: admin, integration, star wars galaxies, swg, oracle, oci8
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.15
+Stable tag: 0.16
 Requires PHP: 7.4
 License: The Unlicense
 License URI: https://unlicense.org
 
-Star Wars Galaxies Authentication for WordPress
+Star Wars Galaxies Authentication for WordPress with Oracle database integration
 
 == Description ==
 
@@ -22,6 +22,21 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 4. Done!
 
 == Changelog ==
+
+= 0.16 =
+* PHP 8.4 full compatibility
+* Complete WordPress coding standards compliance
+* Enhanced security with proper input sanitization for all database settings
+* Improved Oracle OCI8 error handling and logging
+* Better database connection status indicators
+* Password field masking for Oracle credentials
+* Port validation (1-65535) with auto-correction
+* PHPDoc blocks added to all functions
+* Internationalization preparation (i18n ready)
+* Improved code formatting and structure throughout
+* Better resource cleanup in OCI operations
+* Enhanced field descriptions and help text
+* All database tab functionality preserved and improved
 
 = 0.15 =
 * Added comprehensive CSS customization system with tabbed settings interface
@@ -88,6 +103,9 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 * Authentication is functional
 
 == Upgrade Notice ==
+
+= 0.16 =
+* Important: PHP 8.4 compatibility update with enhanced security and WordPress coding standards
 
 = 0.15 =
 * Major CSS customization features added
