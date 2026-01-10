@@ -862,7 +862,7 @@ function swg_auth_auth_type_html( $args ) {
  * @param array $args Section arguments.
  */
 function swg_auth_odb_settings_html( $args ) {
-	$oci_loaded      = extension_loaded( 'OCI8' );
+	$oci_loaded      = extension_loaded( 'oci8' );
 	$oci_connected   = swg_auth_oci_connect();
 	$loaded_status   = $oci_loaded ? 'loaded' : 'NOT loaded';
 	$loaded_class    = $oci_loaded ? 'swg-auth-status-success' : 'swg-auth-status-error';

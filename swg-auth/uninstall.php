@@ -25,6 +25,23 @@ function swg_auth_delete_user_meta() {
     delete_user_meta( $user->ID, 'swg-auth-approved' );
     delete_user_meta( $user->ID, 'swg-auth-banned' );
     delete_user_meta( $user->ID, 'swg-auth-admin-level' );
+    delete_user_meta( $user->ID, 'swg-auth-expansion-jtl' );
+    delete_user_meta( $user->ID, 'swg-auth-expansion-ep3' );
+    delete_user_meta( $user->ID, 'swg-auth-expansion-tow' );
+    delete_user_meta( $user->ID, 'swg-auth-expansion-cu' );
+    delete_user_meta( $user->ID, 'swg-auth-expansion-nge' );
+    delete_user_meta( $user->ID, 'swg-auth-expansion-coa' );
+    delete_user_meta( $user->ID, 'swg-auth-skip-tutorial' );
+    delete_user_meta( $user->ID, 'swg-auth-subscription-state' );
+    delete_user_meta( $user->ID, 'swg-auth-track' );
+    delete_user_meta( $user->ID, 'swg-auth-buddy-points' );
+    delete_user_meta( $user->ID, 'swg-auth-entitlement-total' );
+    delete_user_meta( $user->ID, 'swg-auth-entitlement-entitled' );
+    delete_user_meta( $user->ID, 'swg-auth-entitlement-total-since-login' );
+    delete_user_meta( $user->ID, 'swg-auth-entitlement-entitled-since-login' );
+    delete_user_meta( $user->ID, 'swg-auth-feature-ids' );
+    delete_user_meta( $user->ID, 'swg-auth-veteran-milestones' );
+    delete_user_meta( $user->ID, 'swg-auth-veteran-claimed' );
   }
 }
 

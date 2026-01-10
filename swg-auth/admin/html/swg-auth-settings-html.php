@@ -35,6 +35,26 @@ $active_css_subtab = isset( $_GET['css_subtab'] ) ? sanitize_text_field( $_GET['
     } elseif ( $active_tab === 'keys' ) {
       settings_fields( 'swg-auth-settings-keys' );
       do_settings_sections( 'swg-auth-settings-keys' );
+      submit_button( 'Save Settings' );
+      ?>
+      <hr style="margin: 30px 0;">
+      <h2>Server Configuration</h2>
+      <p>Copy and paste this configuration into your SWG server config files:</p>
+      <textarea id="swg-auth-cfg-output" readonly style="width: 100%; height: 200px; font-family: monospace; background-color: #f5f5f5; padding: 10px; border: 1px solid #ddd;"><?php
+        $loginserver_key = get_option( 'swg-auth-loginserver-key', '' );
+        $serverutility_key = get_option( 'swg-auth-serverutility-key', '' );
+        $centralserver_key = get_option( 'swg-auth-centralserver-key', '' );
+        
+        echo "# LoginServer configuration\n";
+        echo "loginServerKey=" . esc_html( $loginserver_key ) . "\n\n";
+        
+        echo "# ServerUtility configuration\n";
+        echo "serverUtilityKey=" . esc_html( $serverutility_key ) . "\n\n";
+        
+        echo "# CentralServer configuration\n";
+        echo "centralServerKey=" . esc_html( $centralserver_key ) . "\n";
+      ?></textarea>
+      <?php
     } elseif ( $active_tab === 'css' ) {
       // Use single option group for all CSS settings
       settings_fields( 'swg-auth-settings-css-all' );
@@ -60,7 +80,11 @@ $active_css_subtab = isset( $_GET['css_subtab'] ) ? sanitize_text_field( $_GET['
       </div>
       <?php
     }
-    submit_button( 'Save Settings' );
+    
+    // Only show submit button if NOT on keys tab (keys tab handles it separately)
+    if ( $active_tab !== 'keys' ) {
+      submit_button( 'Save Settings' );
+    }
     ?>
   </form>
 

@@ -3,7 +3,7 @@ Contributors: tekaoh
 Tags: admin, integration, star wars galaxies, swg, oracle, oci8
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.16
+Stable tag: 0.17
 Requires PHP: 7.4
 License: The Unlicense
 License URI: https://unlicense.org
@@ -22,6 +22,29 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 4. Done!
 
 == Changelog ==
+
+= 0.18 =
+* Added complete account features system (subscription bits, game bits, tutorial skip)
+* Veteran Rewards support with milestone tracking
+* Entitlement time fields for veteran reward calculations
+* Account Feature IDs system for TCG and special rewards
+* Buddy points and track (station account) settings
+* Admin level override system (0-50 scale)
+* Enhanced authentication response with all account feature data
+* Database integration for ACCOUNT_EXTRACT table (veteran rewards)
+* Automatic JSON encoding fixes for accountFeatureIds object format
+* User profile interface for all account feature settings
+* Diagnostic tools for debugging authentication and rewards
+
+= 0.17 =
+* Added expansion feature flags for user accounts
+* Jump to Lightspeed (JTL) expansion access control
+* Episode 3: Revenge of the Sith expansion access control
+* Trials of Obi-Wan expansion access control
+* All expansions enabled by default for new users (opt-out model)
+* Expansion flags included in authentication response to game server
+* Admin interface for managing per-user expansion access
+* Database cleanup on plugin uninstall for expansion settings
 
 = 0.16 =
 * PHP 8.4 full compatibility
@@ -103,6 +126,12 @@ If you're running a Star Wars Galaxies server, now you can use WordPress to mana
 * Authentication is functional
 
 == Upgrade Notice ==
+
+= 0.18 =
+* Major update: Full account features system including veteran rewards, entitlement times, feature IDs, and admin level override. IMPORTANT: Veteran rewards require server-side configuration - set veteranDebugTriggerAll=1 in server config if database integration doesn't work with your server build.
+
+= 0.17 =
+* New expansion access control features - JTL, Episode 3, and Trials of Obi-Wan flags now available per user
 
 = 0.16 =
 * Important: PHP 8.4 compatibility update with enhanced security and WordPress coding standards

@@ -1,68 +1,58 @@
 <?php
 /**
- * Oracle Database (OCI) Connection Functions
+ * Oracle Database (OCI8) Connection Functions
  *
  * @package SWG_Auth
- * @since 1.0.0
  */
 
-// No Direct Access.
 if ( ! defined( 'ABSPATH' ) ) {
-	die;
+    exit;
 }
 
 /**
- * Establish connection to Oracle database using OCI8 extension
+ * Check if OCI8 is available
  *
- * @since 1.0.0
- * @return resource|false OCI connection resource on success, false on failure
+ * @return bool
+ */
+function swg_auth_has_oci8() {
+    return extension_loaded('oci8') && function_exists('oci_connect');
+}
+
+/**
+ * Establish Oracle connection
+ *
+ * @return resource|false
  */
 function swg_auth_oci_connect() {
-	// Don't even bother if the OCI8 extension isn't installed.
-	// Check for all possible OCI8 extension names (oci8, oci8_12c, oci8_19)
-	if ( ! extension_loaded( 'oci8' ) && ! extension_loaded( 'oci8_12c' ) && ! extension_loaded( 'oci8_19' ) ) {
-		error_log( 'SWG Auth: OCI8 extension not loaded. Enable extension=oci8_19 or extension=oci8_12c in php.ini' );
-		return false;
-	}
 
-	// Get connection parameters from WordPress options.
-	$username = get_option( 'swg-auth-odb-username', 'swg' );
-	$password = get_option( 'swg-auth-odb-password', 'swg' );
-	$host     = get_option( 'swg-auth-odb-ip', 'localhost' );
-	$port     = get_option( 'swg-auth-odb-port', '1521' );
-	$sid      = get_option( 'swg-auth-odb-sid', 'swg' );
+    if ( ! swg_auth_has_oci8() ) {
+        error_log('SWG Auth: OCI8 extension not loaded or oci_connect missing');
+        return false;
+    }
 
-	// Build connection string.
-	$connection_string = sprintf(
-		'(DESCRIPTION =
-			(ADDRESS_LIST =
-				(ADDRESS =
-					(PROTOCOL = TCP)
-					(HOST = %s)
-					(PORT = %s)
-				)
-			)
-			(CONNECT_DATA =
-				(SID = %s)
-			)
-		)',
-		esc_attr( $host ),
-		esc_attr( $port ),
-		esc_attr( $sid )
-	);
+    $username = get_option( 'swg-auth-odb-username', 'swg' );
+    $password = get_option( 'swg-auth-odb-password', 'swg' );
+    $host     = get_option( 'swg-auth-odb-ip', 'localhost' );
+    $port     = get_option( 'swg-auth-odb-port', '1521' );
+    $sid      = get_option( 'swg-auth-odb-sid', 'swg' );
 
-	// Attempt connection with error suppression for better error handling.
-	$connection = @oci_connect( $username, $password, $connection_string );
+    $conn_str = sprintf(
+        '(DESCRIPTION=
+            (ADDRESS=(PROTOCOL=TCP)(HOST=%s)(PORT=%s))
+            (CONNECT_DATA=(SID=%s))
+        )',
+        $host,
+        $port,
+        $sid
+    );
 
-	// Log error if connection failed.
-	if ( ! $connection ) {
-		$error = oci_error();
-		if ( $error ) {
-			error_log( 'SWG Auth OCI Connection Error: ' . $error['message'] );
-		}
-		return false;
-	}
+    $conn = @oci_connect($username, $password, $conn_str);
 
-	// Return connection resource.
-	return $connection;
+    if ( ! $conn ) {
+        $e = oci_error();
+        error_log('SWG Auth OCI error: ' . ($e['message'] ?? 'unknown'));
+        return false;
+    }
+
+    return $conn;
 }

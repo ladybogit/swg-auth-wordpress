@@ -3,7 +3,7 @@
   * Plugin Name: SWG Auth
   * Plugin URI: https://tekaohswg.github.io/swg-auth-wordpress.html
   * Description: Star Wars Galaxies Authentication for WordPress
-  * Version: 0.15
+  * Version: 0.17
   * Author: Tekaoh
   * Author URI: https://tekaohswg.github.io
   * Requires at least: 5.0
@@ -81,15 +81,134 @@ include( plugin_dir_path( __FILE__ ) . 'public/swg-auth-virtual-page.php' );
 include( plugin_dir_path( __FILE__ ) . 'public/swg-auth-resources.php' );
 include( plugin_dir_path( __FILE__ ) . 'public/swg-auth-metrics-widget.php' );
 
-// Enqueue frontend CSS
+// Prevent null post errors when checking virtual page URLs in menus
+add_filter( 'wp_get_nav_menu_items', 'swg_auth_fix_virtual_page_menu_items', 10, 3 );
+function swg_auth_fix_virtual_page_menu_items( $items, $menu, $args ) {
+  if ( ! is_array( $items ) ) {
+    return $items;
+  }
+  
+  foreach ( $items as $item ) {
+    // If this is our Resources virtual page menu item
+    if ( isset( $item->url ) && strpos( $item->url, '/resources' ) !== false ) {
+      // Create a mock post object to prevent null errors
+      $item->object_id = -1;
+      $item->object = 'swg-virtual-page';
+      $item->type = 'custom';
+    }
+  }
+  
+  return $items;
+}
+
+// Disable shortlinks for virtual pages to prevent null post errors
+add_filter( 'pre_get_shortlink', 'swg_auth_disable_virtual_page_shortlinks', 10, 2 );
+function swg_auth_disable_virtual_page_shortlinks( $shortlink, $id ) {
+  global $post;
+  
+  // If $post is null or if we're on a virtual page (ID = -1), return false to disable shortlink
+  if ( ! $post || ( $post && $post->ID === -1 ) ) {
+    return false;
+  }
+  
+  return $shortlink;
+}
+
+// Remove shortlink from wp_head when post is null to prevent errors
+add_action( 'template_redirect', 'swg_auth_maybe_remove_shortlink' );
+function swg_auth_maybe_remove_shortlink() {
+  global $post;
+  
+  // If post is null or virtual page, remove shortlink from head
+  if ( ! $post || ( $post && $post->ID === -1 ) ) {
+    remove_action( 'wp_head', 'wp_shortlink_wp_head', 10 );
+    remove_action( 'template_redirect', 'wp_shortlink_header', 11 );
+  }
+}
+
+// Add SWG Auth Pages meta box to Menus screen
+add_action( 'admin_init', 'swg_auth_add_menu_meta_box' );
+function swg_auth_add_menu_meta_box() {
+  add_meta_box(
+    'swg-auth-pages-menu-box',
+    'SWG Auth Pages',
+    'swg_auth_menu_meta_box_content',
+    'nav-menus',
+    'side',
+    'default'
+  );
+}
+
+// Display the meta box content
+function swg_auth_menu_meta_box_content() {
+  global $_nav_menu_placeholder, $nav_menu_selected_id;
+  $_nav_menu_placeholder = 0 > $_nav_menu_placeholder ? $_nav_menu_placeholder - 1 : -1;
+  
+  // Define available SWG Auth virtual pages
+  $swg_pages = array();
+  
+  // Only add Resources page if OCI8 is loaded
+  if ( extension_loaded( 'oci8' ) ) {
+    $swg_pages[] = (object) array(
+      'ID' => 0,
+      'db_id' => 0,
+      'menu_item_parent' => 0,
+      'object_id' => $_nav_menu_placeholder,
+      'post_parent' => 0,
+      'type' => 'custom',
+      'object' => 'custom',
+      'type_label' => 'Custom Link',
+      'title' => 'Resources',
+      'url' => home_url( '/resources' ),
+      'target' => '',
+      'attr_title' => '',
+      'description' => '',
+      'classes' => array( 'swg-auth-resources' ),
+      'xfn' => '',
+    );
+  }
+  
+  ?>
+  <div id="posttype-swg-auth-pages" class="posttypediv">
+    <div id="tabs-panel-swg-auth-pages" class="tabs-panel tabs-panel-active">
+      <ul id="swg-auth-pages-checklist" class="categorychecklist form-no-clear">
+        <?php if ( empty( $swg_pages ) ): ?>
+          <li><p style="padding: 10px;">No SWG Auth pages available. Make sure OCI8 extension is loaded for Resources page.</p></li>
+        <?php else: ?>
+          <?php
+          $walker = new Walker_Nav_Menu_Checklist();
+          echo walk_nav_menu_tree( array_map( 'wp_setup_nav_menu_item', $swg_pages ), 0, (object) array( 'walker' => $walker ) );
+          ?>
+        <?php endif; ?>
+      </ul>
+    </div>
+    
+    <?php if ( ! empty( $swg_pages ) ): ?>
+      <p class="button-controls">
+        <span class="add-to-menu">
+          <input type="submit" class="button-secondary submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu' ); ?>" name="add-post-type-menu-item" id="submit-posttype-swg-auth-pages">
+          <span class="spinner"></span>
+        </span>
+      </p>
+    <?php endif; ?>
+  </div>
+  <?php
+}
+
+// Enqueue frontend CSS only on plugin pages
 add_action( 'wp_enqueue_scripts', 'swg_auth_enqueue_public_styles' );
 function swg_auth_enqueue_public_styles() {
-  wp_enqueue_style( 
-    'swg-auth-public', 
-    plugin_dir_url( __FILE__ ) . 'public/css/swg-auth-public.css',
-    array(),
-    '0.15'
-  );
+  global $wp;
+  
+  // Only enqueue on plugin virtual pages (resources, etc.)
+  if ( $wp->request === 'resources' || is_page( 'resources' ) ) {
+    wp_enqueue_style( 
+      'swg-auth-public', 
+      plugin_dir_url( __FILE__ ) . 'public/css/swg-auth-public.css',
+      array(),
+      '0.17'
+    );
+  }
 }
 
 // Add custom CSS based on settings

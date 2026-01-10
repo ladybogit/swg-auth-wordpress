@@ -9,48 +9,51 @@ if ( ! defined( 'ABSPATH' ) ) {
 class SWG_AUTH_VIRTUAL_PAGE {
 
   function __construct( $args ) {
-    // Filter the_posts. TODO: Should I be intercepting the WordPress query earlier?
-    add_filter( 'the_posts', array( $this, 'build_page' ) );
     // Make the arguments accessible for later
     $this->args = $args;
+    // Filter the_posts
+    add_filter( 'the_posts', array( $this, 'build_page' ) );
   }
 
   function build_page( $posts ) {
-    global $wp, $wp_query;
+    global $wp, $wp_query, $post;
     // Is the user asking for the virtual page?
     if ( $wp->request === $this->args['slug'] || ( isset( $wp->query_vars['page_id'] ) && $wp->query_vars['page_id'] === $this->args['slug'] ) ) {
-      // Build a post object for the virtual page
-      $post = new stdClass;
-      $post->ID = -1;
-      $post->post_author = 1;
-      $post->post_date = current_time( 'mysql' );
-      $post->post_date_gmt = current_time( 'mysql', true );
-      $post->post_content = "This is not the content you're looking for.";
-      $post->post_title = 'No Title';
-      $post->post_excerpt = '';
-      $post->post_status = 'publish';
-      $post->comment_status = 'closed';
-      $post->ping_status = 'closed';
-      $post->post_password = '';
-      $post->post_name = $this->args['slug'];
-      $post->to_ping = '';
-      $post->pinged = '';
-      $post->post_modified = current_time( 'mysql' );
-      $post->post_modified_gmt = current_time( 'mysql', true );
-      $post->post_content_filtered = '';
-      $post->post_parent = 0;
-      $post->guid = get_site_url() . '/?page_id=' . $this->args['slug'];
-      $post->menu_order = 0;
-      $post->post_type = 'page';
-      $post->post_mime_type = '';
-      $post->comment_count = 0;
-      $post->filter = 'raw';
+      // Build a WP_Post object for the virtual page
+      $virtual_post = new WP_Post( (object) array(
+        'ID' => -1,
+        'post_author' => 1,
+        'post_date' => current_time( 'mysql' ),
+        'post_date_gmt' => current_time( 'mysql', true ),
+        'post_content' => isset( $this->args['post_content'] ) ? $this->args['post_content'] : "This is not the content you're looking for.",
+        'post_title' => isset( $this->args['post_title'] ) ? $this->args['post_title'] : 'No Title',
+        'post_excerpt' => '',
+        'post_status' => 'publish',
+        'comment_status' => 'closed',
+        'ping_status' => 'closed',
+        'post_password' => '',
+        'post_name' => $this->args['slug'],
+        'to_ping' => '',
+        'pinged' => '',
+        'post_modified' => current_time( 'mysql' ),
+        'post_modified_gmt' => current_time( 'mysql', true ),
+        'post_content_filtered' => '',
+        'post_parent' => 0,
+        'guid' => get_site_url() . '/' . $this->args['slug'],
+        'menu_order' => 0,
+        'post_type' => 'page',
+        'post_mime_type' => '',
+        'comment_count' => 0,
+        'filter' => 'raw',
+      ) );
 
-      // Merge any arguments provided into my post object
-      $post = (object) array_merge( (array) $post, (array) $this->args);
+      // Set global post
+      $post = $virtual_post;
+      $GLOBALS['post'] = $virtual_post;
+
       // Discard whatever posts WordPress found and put the virtual page in there instead
       $posts = NULL;
-      $posts[] = $post;
+      $posts[] = $virtual_post;
 
       // Let WordPress know what the query for the virtual page would have looked like
       $wp_query->is_page = true;
@@ -58,6 +61,13 @@ class SWG_AUTH_VIRTUAL_PAGE {
       $wp_query->is_home = false;
       $wp_query->is_archive = false;
       $wp_query->is_category = false;
+      $wp_query->post = $virtual_post;
+      $wp_query->posts = $posts;
+      $wp_query->queried_object = $virtual_post;
+      $wp_query->queried_object_id = $virtual_post->ID;
+      $wp_query->post_count = 1;
+      $wp_query->found_posts = 1;
+      $wp_query->max_num_pages = 1;
       // Assure WordPress that everything is A-Okay...
       unset( $wp_query->query['error'] );
       $wp_query->query_vars['error'] = '';

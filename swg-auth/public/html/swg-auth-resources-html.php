@@ -8,6 +8,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Connect to Oracle
 $connection = swg_auth_oci_connect();
 
+// Check if connection succeeded
+if ( ! $connection ) {
+  echo '<div class="swg-auth-error">';
+  echo '<h3>Database Connection Error</h3>';
+  echo '<p>Unable to connect to the Oracle database. Please check your database settings.</p>';
+  echo '<p>Make sure the OCI8 PHP extension is installed and the Oracle Instant Client is configured correctly.</p>';
+  echo '</div>';
+  return;
+}
+
 // Get SWG Server's clock
 $statement = oci_parse( $connection, "SELECT * FROM CLOCK" );
 $results = oci_execute( $statement );

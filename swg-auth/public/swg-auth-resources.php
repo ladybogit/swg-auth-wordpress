@@ -215,6 +215,11 @@ function swg_auth_enqueue_resources_css() {
  * @return string HTML content for resources page.
  */
 function swg_auth_resources_html() {
+	// Check if OCI8 extension is available.
+	if ( ! extension_loaded( 'oci8' ) ) {
+		return '<div class="swg-auth-error"><p>The OCI8 PHP extension is not loaded.</p><p>The Resources feature requires the OCI8 extension to connect to the Oracle database. Please enable it in your PHP configuration or contact your server administrator.</p></div>';
+	}
+
 	// Get resource metadata.
 	$resources = require plugin_dir_path( __FILE__ ) . 'swg-auth-resource-metadata.php';
 
@@ -228,13 +233,23 @@ function swg_auth_resources_html() {
 	return ob_get_clean();
 }
 
-// Create the virtual resources page (only if OCI8 is available).
-if ( extension_loaded( 'OCI8' ) ) {
-	new SWG_AUTH_VIRTUAL_PAGE(
-		array(
-			'slug'         => 'resources',
-			'post_title'   => 'Resources',
-			'post_content' => swg_auth_resources_html(),
-		)
-	);
+/**
+ * Initialize the virtual resources page
+ *
+ * @since 1.0.0
+ */
+function swg_auth_init_resources_page() {
+	// Create the virtual resources page (only if OCI8 is available).
+	if ( extension_loaded( 'oci8' ) ) {
+		new SWG_AUTH_VIRTUAL_PAGE(
+			array(
+				'slug'         => 'resources',
+				'post_title'   => 'Resources',
+				'post_content' => swg_auth_resources_html(),
+			)
+		);
+	}
 }
+
+// Hook into init to create the virtual page when WordPress is ready
+add_action( 'init', 'swg_auth_init_resources_page' );
