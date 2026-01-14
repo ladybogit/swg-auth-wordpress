@@ -109,8 +109,23 @@ $track = get_user_meta( $user->ID, 'swg-auth-track', true );
 $buddy_points = get_user_meta( $user->ID, 'swg-auth-buddy-points', true );
 $subscription_state = get_user_meta( $user->ID, 'swg-auth-subscription-state', true );
 
-// Entitlement times
+// Entitlement times - Calculate automatically from account age
+$account_created = strtotime( $user->user_registered );
+$current_time = time();
+$account_age_seconds = $current_time - $account_created;
+$account_age_days = round( $account_age_seconds / 86400 );
+
+$entitlement_override = get_user_meta( $user->ID, 'swg-auth-entitlement-override', true );
 $entitlement_total = get_user_meta( $user->ID, 'swg-auth-entitlement-total', true );
+
+// If no override set but total exists, use the total as default override
+if ( empty( $entitlement_override ) && ! empty( $entitlement_total ) ) {
+  $entitlement_override = intval( $entitlement_total );
+}
+
+$calculated_entitlement = $account_age_seconds + ( $entitlement_override ? intval( $entitlement_override ) : 0 );
+$calculated_milestones = floor( $calculated_entitlement / 7776000 );
+
 $entitlement_entitled = get_user_meta( $user->ID, 'swg-auth-entitlement-entitled', true );
 $entitlement_total_since_login = get_user_meta( $user->ID, 'swg-auth-entitlement-total-since-login', true );
 $entitlement_entitled_since_login = get_user_meta( $user->ID, 'swg-auth-entitlement-entitled-since-login', true );
@@ -164,13 +179,63 @@ $feature_ids = get_user_meta( $user->ID, 'swg-auth-feature-ids', true );
     </td>
   </tr>
 
+  <tr style="background-color: #f0f8ff;">
+    <th colspan="2">
+      <h3 style="margin: 10px 0;">Veteran Rewards (Auto-Calculated)</h3>
+    </th>
+  </tr>
+
+  <tr>
+    <th>Account Information</th>
+    <td>
+      <strong>Created:</strong> <?php echo date('Y-m-d H:i:s', $account_created); ?><br>
+      <strong>Account Age:</strong> <?php echo $account_age_days; ?> days (<?php echo number_format($account_age_seconds); ?> seconds)<br>
+      <strong>Override Value:</strong> <span id="override-display"><?php echo number_format($entitlement_override ? intval($entitlement_override) : 0); ?></span> seconds<br>
+      <strong style="color: green;">Total Entitlement:</strong> <span id="calculated-display" style="color: green; font-weight: bold;"><?php echo number_format($calculated_entitlement); ?></span> seconds (<span id="days-display"><?php echo round($calculated_entitlement/86400); ?></span> days)<br>
+      <strong>Current Milestones:</strong> <span id="milestones-display"><?php echo $calculated_milestones; ?></span>
+    </td>
+  </tr>
+
   <tr>
     <th>
-      <label for="swg-auth-entitlement-total">Total Entitlement Time</label>
+      <label for="swg-auth-entitlement-override">Entitlement Time Override</label>
     </th>
     <td>
-      <input type="number" name="swg-auth-entitlement-total" min="0" value="<?php echo ( $entitlement_total === '' ) ? '0' : esc_attr( $entitlement_total ); ?>">
-      <span class="description">Total subscribed time in seconds</span>
+      <input type="number" id="swg-auth-entitlement-override" name="swg-auth-entitlement-override" min="0" value="<?php echo ( $entitlement_override === '' ) ? '0' : esc_attr( $entitlement_override ); ?>">
+      <span class="description">Additional seconds to add to account age (77760000 = 900 days = 10 milestones)</span>
+    </td>
+  </tr>
+  
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const accountAge = <?php echo $account_age_seconds; ?>;
+    const overrideInput = document.getElementById('swg-auth-entitlement-override');
+    const overrideDisplay = document.getElementById('override-display');
+    const calculatedDisplay = document.getElementById('calculated-display');
+    const daysDisplay = document.getElementById('days-display');
+    const milestonesDisplay = document.getElementById('milestones-display');
+    
+    overrideInput.addEventListener('input', function() {
+      const override = parseInt(this.value) || 0;
+      const total = accountAge + override;
+      const days = Math.round(total / 86400);
+      const milestones = Math.floor(total / 7776000);
+      
+      overrideDisplay.textContent = override.toLocaleString();
+      calculatedDisplay.textContent = total.toLocaleString();
+      daysDisplay.textContent = days;
+      milestonesDisplay.textContent = milestones;
+    });
+  });
+  </script>
+
+  <tr>
+    <th>
+      <label for="swg-auth-entitlement-total">Total Entitlement Time (Calculated)</label>
+    </th>
+    <td>
+      <input type="number" name="swg-auth-entitlement-total" min="0" value="<?php echo ( $entitlement_total === '' ) ? '0' : esc_attr( $entitlement_total ); ?>" readonly style="background-color: #f0f0f0;">
+      <span class="description">Auto-calculated: Account Age + Override = <?php echo number_format($calculated_entitlement); ?> seconds</span>
     </td>
   </tr>
 

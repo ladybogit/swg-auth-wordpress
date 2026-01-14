@@ -163,17 +163,35 @@ function swg_auth_buddy_points_update( $user_id ) {
   return update_user_meta( $user_id, 'swg-auth-buddy-points', $points );
 }
 
-add_action( 'edit_user_profile_update', 'swg_auth_entitlement_total_update' );
-function swg_auth_entitlement_total_update( $user_id ) {
+add_action( 'edit_user_profile_update', 'swg_auth_entitlement_override_update' );
+function swg_auth_entitlement_override_update( $user_id ) {
   if ( ! current_user_can( 'edit_user', $user_id ) ) {
     return false;
   }
-  $time = intval( $_POST['swg-auth-entitlement-total'] );
+  $time = intval( $_POST['swg-auth-entitlement-override'] );
   if ( $time < 0 ) {
     $time = 0;
   }
-  return update_user_meta( $user_id, 'swg-auth-entitlement-total', $time );
+  
+  // Save the override
+  update_user_meta( $user_id, 'swg-auth-entitlement-override', $time );
+  
+  // Recalculate total entitlement and milestones
+  $user = get_userdata( $user_id );
+  $account_created = strtotime( $user->user_registered );
+  $current_time = time();
+  $account_age_seconds = $current_time - $account_created;
+  $total_entitlement = $account_age_seconds + $time;
+  $milestones = floor( $total_entitlement / 7776000 );
+  
+  // Update the calculated values
+  update_user_meta( $user_id, 'swg-auth-entitlement-total', $total_entitlement );
+  update_user_meta( $user_id, 'swg-auth-veteran-milestones', $milestones );
+  
+  return true;
 }
+
+// Removed swg_auth_entitlement_total_update - it was overwriting the auto-calculated value
 
 add_action( 'edit_user_profile_update', 'swg_auth_entitlement_entitled_update' );
 function swg_auth_entitlement_entitled_update( $user_id ) {

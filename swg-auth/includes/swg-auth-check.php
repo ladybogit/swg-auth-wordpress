@@ -76,12 +76,31 @@ if ( isset( $_GET['action'] ) && $_GET['action'] === 'swg-auth' ) {
     $skip_tutorial = get_user_meta( $user->ID, 'swg-auth-skip-tutorial', true );
     $track = get_user_meta( $user->ID, 'swg-auth-track', true );
     $buddy_points = get_user_meta( $user->ID, 'swg-auth-buddy-points', true );
-    $entitlement_total = get_user_meta( $user->ID, 'swg-auth-entitlement-total', true );
+    
+    // Calculate entitlement time automatically based on account age + override
+    $account_created = strtotime( $user->user_registered );
+    $current_time = time();
+    $account_age_seconds = $current_time - $account_created;
+    
+    // Get override value (additional time to add)
+    $entitlement_override = get_user_meta( $user->ID, 'swg-auth-entitlement-override', true );
+    $entitlement_override = ( $entitlement_override !== '' ) ? intval( $entitlement_override ) : 0;
+    
+    // Total entitlement = account age + override
+    $entitlement_total = $account_age_seconds + $entitlement_override;
+    
+    // Store the calculated value back to user meta for reference
+    update_user_meta( $user->ID, 'swg-auth-entitlement-total', $entitlement_total );
+    
+    // Calculate milestones automatically (90 days = 7,776,000 seconds per milestone)
+    $veteran_milestones = floor( $entitlement_total / 7776000 );
+    update_user_meta( $user->ID, 'swg-auth-veteran-milestones', $veteran_milestones );
+    
+    // Other entitlement values (can be set manually or calculated similarly)
     $entitlement_entitled = get_user_meta( $user->ID, 'swg-auth-entitlement-entitled', true );
     $entitlement_total_since_login = get_user_meta( $user->ID, 'swg-auth-entitlement-total-since-login', true );
     $entitlement_entitled_since_login = get_user_meta( $user->ID, 'swg-auth-entitlement-entitled-since-login', true );
     $feature_ids_text = get_user_meta( $user->ID, 'swg-auth-feature-ids', true );
-    $veteran_milestones = get_user_meta( $user->ID, 'swg-auth-veteran-milestones', true );
     $veteran_claimed = get_user_meta( $user->ID, 'swg-auth-veteran-claimed', true );
     
     $jtl_enabled = ( $jtl_setting === '' || $jtl_setting === 'on' ) ? 1 : 0;
